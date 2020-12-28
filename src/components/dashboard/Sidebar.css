@@ -1,0 +1,43 @@
+.sidebar-head{
+    border-top:0;
+    border-right: 0;
+    border-left:0;
+    font-size: 30px;
+    color: cornflowerblue;
+    text-transform: uppercase;
+    text-shadow: bisque;
+    font-weight: bolder;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.sidebar-admin {
+    border-top:0;
+    border-right: 0;
+    border-left:0;   
+}
+.sidebar-admin img{
+    border-radius: 100%;
+    padding-bottom: 10px;
+}
+.border-none{
+    border:none;
+}
+
+.headbar-link{
+    text-decoration: none;
+    color:lightslategray;
+}
+
+.head-div{
+    background-color:gainsboro;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bolder;
+}
+.headbar-link:hover{
+    text-decoration: none;
+    color: white;
+    
+}
+.head-div:hover{
+    background-color:lightgray;
+}
