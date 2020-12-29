@@ -25,6 +25,14 @@ const ShowFood = (props) => {
   const [cart, setCart] = useState("");
   const [fresh, setFresh] = useState(false);
 
+  ////////////////////////////// get token
+
+  const getToken=()=>{
+    return (localStorage.token)?localStorage.getItem("token"):sessionStorage.getItem("token");
+  }
+
+  /////////////////////////////
+
 
   useEffect(() => {
     axios
@@ -51,17 +59,23 @@ const ShowFood = (props) => {
   },[fresh]);
 
   const handleAdd = (name,price,id,image) => {
-    let content=sessionStorage.getItem("cartContent")?JSON.parse(sessionStorage.getItem("cartContent")):[];
-    if(content.filter(item=>{return item.id==id}).length){
-      message.warning("food already added")
+    if(getToken()){
+      let content=sessionStorage.getItem("cartContent")?JSON.parse(sessionStorage.getItem("cartContent")):[];
+      if(content.filter(item=>{return item.id==id}).length){
+        message.warning("food already added")
+      }
+      else{
+        content.push({id,name,price,image,qty:1});
+        let contentString=JSON.stringify(content)
+        sessionStorage.setItem("cartContent",contentString);
+        message.success("Food added with success");
+        props.history.push(props.location.pathname)
+      }
     }
     else{
-      content.push({id,name,price,image,qty:1});
-      let contentString=JSON.stringify(content)
-      sessionStorage.setItem("cartContent",contentString);
-      message.success("Food added with success");
-      props.history.push(props.location.pathname)
+      message.warning("You should be login")
     }
+    
   };
   return (
     <Fragment>

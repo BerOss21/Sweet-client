@@ -4,9 +4,9 @@ import { Form, Input, Button, Checkbox, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import axios from "axios";
 
-const Login = (props) => {
+const LoginCustomer = (props) => {
   const onFinish = (values) => {
-     axios.post("/api/login",{
+    axios.post("/api/login/customers",{
         email:values.email,
         password:values.password
     }).then(res=>{
@@ -14,12 +14,12 @@ const Login = (props) => {
             if(values.remember){
                 localStorage.setItem("token",res.data.success.token);
                 localStorage.setItem("name",res.data.success.name);
-                localStorage.setItem("isAdmin","admin");
+                localStorage.setItem("id",res.data.success.id);
             }
             else{
                 sessionStorage.setItem("token",res.data.success.token);
                 sessionStorage.setItem("name",res.data.success.name);
-                sessionStorage.setItem("isAdmin","admin");
+                sessionStorage.setItem("id",res.data.success.id);
             }
             props.history.push("/");
         }
@@ -32,15 +32,13 @@ const Login = (props) => {
             console.log("error",error.response)
             message.error(Object.values(error.response.data).map(item=>{return (<li>{item}</li>)}));
         }
-        console.log("values",values);
     })
-    console.log("Received values of form: ", values);
   };
 
   return (
     <Fragment>
       <div className="container my-5 col-md-3 border border-secondary p-4">
-        <h3 className="text-center">Admin form</h3>
+        <h3 className="text-center">Login form</h3>
         <Form
           name="normal_login"
           className="login-form"
@@ -99,6 +97,7 @@ const Login = (props) => {
             >
               Log in
             </Button>
+            Or <a href="">register now!</a>
           </Form.Item>
         </Form>
       </div>
@@ -107,4 +106,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default LoginCustomer;

@@ -13,6 +13,8 @@ const Home=(props)=>{
     const getCategory=(category)=>{
         setCategory(category)
     }
+    console.log("isadminSession",sessionStorage.isAdmin);
+    console.log("isadminlocal",localStorage.isAdmin);
     return(
         <Fragment>
             <main>

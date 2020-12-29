@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Card, Form, Input, Button, Alert} from "antd";
+import { Card, Form, Input, Button, Alert, message} from "antd";
 import axios from "axios";
 import Footer from "./Footer";
 
@@ -13,25 +13,41 @@ const tailLayout = {
 
 const OrderFood = (props) => {
   const [total,setTotal]=useState("");
+
+  
+  ////////////////////////////// get token
+
+  const getToken=()=>{
+    return (localStorage.token)?localStorage.getItem("token"):sessionStorage.getItem("token");
+  }
+
+  /////////////////////////////
   
   const onFinish = (values) => {
     console.log("Success:", values);
-    axios.post("/api/orders",{
-      name:values.fullname,
-      phone:values.phone,
-      address:values.address,
-      message:values.message,
-      total,
-      detail:JSON.parse(sessionStorage.getItem("order"))     
-    }).then(res=>{
-      if(res.data.success){
-          sessionStorage.removeItem("order");
-          sessionStorage.removeItem("cartContent");
-          props.history.push("/thanks");
-      }
-    }).catch(err=>{
-      console.log("errpr",err);
-    })
+    if(JSON.parse(sessionStorage.getItem("order")).length>0){
+      axios.post("/api/orders",{
+        name:values.fullname,
+        phone:values.phone,
+        address:values.address,
+        message:values.message,
+        total,
+        detail:JSON.parse(sessionStorage.getItem("order"))     
+      },{ headers: { "Authorization": `Bearer ${getToken}` } }).then(res=>{
+        if(res.data.success){
+            sessionStorage.removeItem("order");
+            sessionStorage.removeItem("cartContent");
+            props.history.push("/thanks");
+        }
+      }).catch(err=>{
+        console.log("error",err);
+      })
+    }
+
+    else{
+      message.warning("you should add something to cart!!")
+    }
+    
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -53,7 +69,7 @@ const OrderFood = (props) => {
   return (
     <Fragment>
       <div className="container mt-5 col-md-6">
-        <Card title={`Order ${props.match.params.food}`}>
+        <Card title="Checkout">
           <Form
             {...layout}
             name="basic"
@@ -98,7 +114,7 @@ const OrderFood = (props) => {
             style={{textAlign:"center",width:"90%"}}
             />
              <Alert 
-            message={`${total} DHS`}
+            message={`${props.location.total} DHS`}
             type="success" 
             style={{textAlign:"center",width:"90%",marginTop:"5px"}}
             />

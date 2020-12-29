@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { NavLink } from "react-router-dom";
-import {ClearOutlined} from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import { ClearOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
 import "./css/all.min.css";
 import "./css/templatemo-style.css";
 import "bootstrap/dist/css/bootstrap.css";
@@ -18,18 +18,20 @@ const Header_main = (props) => {
     $("#logout").addClass("invisible");
   };
 
-  const handleClear=e=>{
+  const handleClear = (e) => {
     e.preventDefault();
     sessionStorage.removeItem("cartContent");
     setFresh(!fresh);
-  }
-  
+  };
+
   const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
     localStorage.removeItem("name");
     sessionStorage.removeItem("token");
-    sessionStorage.removeItem("name");  
+    sessionStorage.removeItem("name");
+    sessionStorage.removeItem("isAdmin");
+    localStorage.removeItem("isAdmin");
     setFresh(!fresh);
   };
   return (
@@ -38,7 +40,7 @@ const Header_main = (props) => {
         <div className="parallax-window">
           <div className="tm-header">
             <div className="row tm-header-inner">
-              <div className="col-md-6 col-12">
+              <div className="col-md-5 col-12">
                 <img
                   src="img/simple-house-logo.png"
                   alt="Logo"
@@ -51,7 +53,7 @@ const Header_main = (props) => {
                   </h6>
                 </div>
               </div>
-              <nav className="col-md-6 col-12 tm-nav">
+              <nav className="col-md-7 col-12 tm-nav">
                 <ul className="tm-nav-ul">
                   <li className="tm-nav-li" id="homeLink">
                     <NavLink exact to="/" className="tm-nav-link">
@@ -68,21 +70,43 @@ const Header_main = (props) => {
                       Contact
                     </NavLink>
                   </li>
-                  <li className="tm-nav-li row">
-                    <NavLink to="/cart" className="tm-nav-link">
-                      Cart ({JSON.parse(sessionStorage.getItem("cartContent"))?JSON.parse(sessionStorage.getItem("cartContent")).length:0})
-                    </NavLink>
-                    <Tooltip title="Clear cart">
-                      <a href="" className="text-danger ml-1 h6" onClick={handleClear} ><ClearOutlined /></a>
-                    </Tooltip>
-                  </li>
-                  {(localStorage.token || sessionStorage.token)? (
+                  {localStorage.token || sessionStorage.token ? (
                     <Fragment>
-                      <li className="tm-nav-li">
-                        <NavLink to="/dashboard" className="tm-nav-link">
-                          Dashboard
-                        </NavLink>
-                      </li>
+                      {localStorage.isAdmin || sessionStorage.isAdmin ? (
+                        <li className="tm-nav-li">
+                          <NavLink to="/dashboard" className="tm-nav-link">
+                            Dashboard
+                          </NavLink>
+                        </li>
+                      ) : (
+                        <Fragment>
+                          <li className="tm-nav-li row">
+                            <NavLink to="/cart" className="tm-nav-link">
+                              Cart (
+                              {JSON.parse(sessionStorage.getItem("cartContent"))
+                                ? JSON.parse(
+                                    sessionStorage.getItem("cartContent")
+                                  ).length
+                                : 0}
+                              )
+                            </NavLink>
+                            <Tooltip title="Clear cart">
+                              <a
+                                href=""
+                                className="text-danger ml-1 h6"
+                                onClick={handleClear}
+                              >
+                                <ClearOutlined />
+                              </a>
+                            </Tooltip>
+                          </li>
+                          <li className="tm-nav-li">
+                            <NavLink to="/myOrders" className="tm-nav-link">
+                              My Orders
+                            </NavLink>
+                          </li>
+                        </Fragment>
+                      )}
                       <div
                         className="d-flex flex-column"
                         onMouseEnter={showLogout}
@@ -90,7 +114,9 @@ const Header_main = (props) => {
                       >
                         <li className="tm-nav-li">
                           <a to="/#" className="tm-nav-link dropdown-toggle">
-                            {localStorage.getItem("name")?localStorage.getItem("name"):sessionStorage.getItem("name")}
+                            {localStorage.getItem("name")
+                              ? localStorage.getItem("name")
+                              : sessionStorage.getItem("name")}
                           </a>
                         </li>
                         <a
@@ -112,6 +138,11 @@ const Header_main = (props) => {
                       <li className="tm-nav-li">
                         <NavLink to="/register" className="tm-nav-link">
                           Register
+                        </NavLink>
+                      </li>
+                      <li className="tm-nav-li">
+                        <NavLink to="/admin" className="tm-nav-link">
+                          Admin ?
                         </NavLink>
                       </li>
                     </Fragment>
