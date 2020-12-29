@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import "antd/dist/antd.css";
 import HeadBar from "./HeadBar";
 import { Link } from "react-router-dom";
-import { Table, Modal, Select,message } from "antd";
+import { Table, Modal, Select, message } from "antd";
 import axios from "axios";
 
 const { Option } = Select;
@@ -42,20 +42,39 @@ const Orders = (props) => {
       });
   }, [fresh]);
 
-  function handleStateChange(id,value) {
-      axios.patch(`/api/orders/${id}`,{state:value}).then(res=>{
-        if(res.data.success){
-          message.success("State updated")
+  const handleStateChange=(id, value)=>{
+    axios
+      .patch(`/api/orders/${id}`, { state: value })
+      .then((res) => {
+        if (res.data.success) {
+          message.success("State updated");
         }
-      }).catch(err=>{
-        console.log("error",err)
       })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  }
+
+  const handleFilterChange=value=>{
+    axios.get(`/api/orders/getByState/${value}`).then(res=>{
+      setOrders(res.data.orders);
+    }).catch(err=>{
+      console.log("error",err)
+    })
   }
   const optionList = [
     <Option value="to do">to do</Option>,
     <Option value="ongoing">ongoing</Option>,
     <Option value="done">done</Option>,
   ];
+
+  const optionListForFilter= [
+    <Option value="all">All Orders</Option>,
+    <Option value="to do">to do</Option>,
+    <Option value="ongoing">ongoing</Option>,
+    <Option value="done">done</Option>,
+  ];
+
   const columns = [
     {
       title: "",
@@ -98,8 +117,8 @@ const Orders = (props) => {
             <Select
               defaultValue={item.state}
               style={{ width: 120 }}
-              onChange={(value)=>{
-                handleStateChange(item.id,value)
+              onChange={(value) => {
+                handleStateChange(item.id, value);
               }}
             >
               {optionList}
@@ -216,6 +235,13 @@ const Orders = (props) => {
                 Total to pay: {order.total} DHS
               </div>
             </Modal>
+            <Select
+              defaultValue="All Orders"
+              style={{ width: 150,marginBottom:"8px"}}
+              onChange={handleFilterChange}
+            >
+              {optionListForFilter}
+            </Select>
             <Table
               columns={columns}
               dataSource={data}
