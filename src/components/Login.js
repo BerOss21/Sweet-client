@@ -14,11 +14,13 @@ const Login = (props) => {
             if(values.remember){
                 localStorage.setItem("token",res.data.success.token);
                 localStorage.setItem("name",res.data.success.name);
+                localStorage.setItem("image",res.data.success.image);
                 localStorage.setItem("isAdmin","admin");
             }
             else{
                 sessionStorage.setItem("token",res.data.success.token);
                 sessionStorage.setItem("name",res.data.success.name);
+                sessionStorage.setItem("image",res.data.success.image);
                 sessionStorage.setItem("isAdmin","admin");
             }
             props.history.push("/");

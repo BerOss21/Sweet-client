@@ -39,6 +39,8 @@ const RegisterCustomer = (props) => {
       localStorage.setItem("token",res.data.success.token);
       localStorage.setItem("name",res.data.success.name);
       localStorage.setItem("id",res.data.success.id);
+      localStorage.setItem("image",res.data.success.image.encoded);
+      localStorage.setItem("email",res.data.success.email);
       localStorage.setItem("isAdmin",false);
       props.history.push("/");
       message.success("You are registred now");

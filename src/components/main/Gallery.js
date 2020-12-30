@@ -51,8 +51,8 @@ const Gallery = (props) => {
       })
   ):("");
 
-  const handleShow=food=>{
-    props.history.push(`/detail/${food}`)
+  const handleShow=(food,id)=>{
+    props.history.push({pathname:`/detail/${food}`,id})
   }
   const foodsList = foods
     ? foods.map((item) => {
@@ -72,7 +72,7 @@ const Gallery = (props) => {
                   <h4 className="tm-gallery-title">{item.name}</h4>
                   <p className="tm-gallery-description">{item.description.substr(0,100)}</p>
                   <p className="tm-gallery-price">{item.price} DHS</p>
-                  <button className="btn btn-success btn-small rounded" onClick={()=>{handleShow(item.name)}}>More</button>
+                  <button className="btn btn-success btn-small rounded" onClick={()=>{handleShow(item.name,item.id)}}>More</button>
                 </figcaption>
               </figure>
             </article>

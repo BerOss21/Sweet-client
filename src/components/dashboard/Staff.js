@@ -8,10 +8,8 @@ import {
   Button,
   Form,
   Input,
-  InputNumber,
   Upload,
   message,
-  Select,
 } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import axios from "axios";

@@ -31,9 +31,10 @@ const OrderFood = (props) => {
         phone:values.phone,
         address:values.address,
         message:values.message,
+        customer_id:sessionStorage.id || localStorage.id,
         total,
         detail:JSON.parse(sessionStorage.getItem("order"))     
-      },{ headers: { "Authorization": `Bearer ${getToken}` } }).then(res=>{
+      },{ headers: { "Authorization": `Bearer ${getToken()}` } }).then(res=>{
         if(res.data.success){
             sessionStorage.removeItem("order");
             sessionStorage.removeItem("cartContent");
@@ -73,9 +74,9 @@ const OrderFood = (props) => {
           <Form
             {...layout}
             name="basic"
-            initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
+            initialValues={{fullname:localStorage.name}}
           >
             <Form.Item
               label="Fullname"
@@ -84,7 +85,7 @@ const OrderFood = (props) => {
                 { required: true, message: "Please input your fullname!" },
               ]}
             >
-              <Input />
+              <Input disabled={true}/>
             </Form.Item>
             <Form.Item
               label="Phone"

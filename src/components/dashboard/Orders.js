@@ -29,8 +29,9 @@ const Orders = (props) => {
   /////////////////////////////
 
   useEffect(() => {
+    let token=getToken();
     axios
-      .get("/api/orders")
+      .get("/api/orders",{ headers: { "Authorization": `Bearer ${token}` } })
       .then((res) => {
         console.log("orders", res.data.orders);
         setOrders(res.data.orders);
@@ -43,8 +44,9 @@ const Orders = (props) => {
   }, [fresh]);
 
   const handleStateChange=(id, value)=>{
+    let token=getToken();
     axios
-      .patch(`/api/orders/${id}`, { state: value })
+      .patch(`/api/orders/${id}`, { state: value },{ headers: { "Authorization": `Bearer ${token}` } })
       .then((res) => {
         if (res.data.success) {
           message.success("State updated");
@@ -56,23 +58,24 @@ const Orders = (props) => {
   }
 
   const handleFilterChange=value=>{
-    axios.get(`/api/orders/getByState/${value}`).then(res=>{
+    let token=getToken();
+    axios.get(`/api/orders/getByState/${value}`,{ headers: { "Authorization": `Bearer ${token}` } }).then(res=>{
       setOrders(res.data.orders);
     }).catch(err=>{
       console.log("error",err)
     })
   }
   const optionList = [
-    <Option value="to do">to do</Option>,
-    <Option value="ongoing">ongoing</Option>,
-    <Option value="done">done</Option>,
+    <Option value="to do">To do</Option>,
+    <Option value="ongoing">Ongoing</Option>,
+    <Option value="done">Done</Option>,
   ];
 
   const optionListForFilter= [
     <Option value="all">All Orders</Option>,
-    <Option value="to do">to do</Option>,
-    <Option value="ongoing">ongoing</Option>,
-    <Option value="done">done</Option>,
+    <Option value="to do">To do</Option>,
+    <Option value="ongoing">Ongoing</Option>,
+    <Option value="done">Done</Option>,
   ];
 
   const columns = [

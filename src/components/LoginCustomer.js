@@ -5,6 +5,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const LoginCustomer = (props) => {
+  
   const onFinish = (values) => {
     axios.post("/api/login/customers",{
         email:values.email,
@@ -15,11 +16,15 @@ const LoginCustomer = (props) => {
                 localStorage.setItem("token",res.data.success.token);
                 localStorage.setItem("name",res.data.success.name);
                 localStorage.setItem("id",res.data.success.id);
+                localStorage.setItem("image",res.data.success.image.encoded);
+                localStorage.setItem("email",res.data.success.email);
             }
             else{
                 sessionStorage.setItem("token",res.data.success.token);
                 sessionStorage.setItem("name",res.data.success.name);
                 sessionStorage.setItem("id",res.data.success.id);
+                sessionStorage.setItem("image",res.data.success.image.encoded);
+                sessionStorage.setItem("email",res.data.success.email);
             }
             props.history.push("/");
         }

@@ -26,12 +26,8 @@ const Header_main = (props) => {
 
   const logout = (e) => {
     e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("name");
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("name");
-    sessionStorage.removeItem("isAdmin");
-    localStorage.removeItem("isAdmin");
+    localStorage.clear();
+    sessionStorage.clear();
     setFresh(!fresh);
   };
   return (
@@ -102,7 +98,7 @@ const Header_main = (props) => {
                           </li>
                           <li className="tm-nav-li">
                             <NavLink to="/myOrders" className="tm-nav-link">
-                              My Orders
+                               Orders
                             </NavLink>
                           </li>
                         </Fragment>
