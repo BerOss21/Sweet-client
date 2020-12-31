@@ -49,8 +49,7 @@ const ShowFood = (props) => {
   const [price, setPrice] = useState("");
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
-  const [comment, setComment] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const [gallery, setGallery] = useState("");
   const [fresh, setFresh] = useState(false);
 
   ////////////////////////////// get token and id
@@ -88,6 +87,7 @@ const ShowFood = (props) => {
         setPrice(res.data.food[0].price);
         setCategory(res.data.food[0].category.name);
         setImage(res.data.food[0].image.encoded);
+        setGallery(res.data.food[0].gallery)
       })
       .catch((err) => {
         console.log("error", err);
@@ -99,7 +99,7 @@ const ShowFood = (props) => {
       .get(`/api/comments/${id}`)
       .then((res) => {
         setComments(res.data.comments);
-        console.log("comments",res.data.comments)
+        console.log("comments", res.data.comments);
       })
       .catch((err) => {
         console.log("err", err);
@@ -162,11 +162,12 @@ const ShowFood = (props) => {
                 ]
               : [],
           author: item.customer.name,
-          avatar: item.customer_id==0? (
-            <Avatar icon={<UserOutlined />} />
-          ) : (
-            <Avatar src={<Image src={item.customer.image.encoded} />} />
-          ),
+          avatar:
+            item.customer_id == 0 ? (
+              <Avatar icon={<UserOutlined />} />
+            ) : (
+              <Avatar src={<Image src={item.customer.image.encoded} />} />
+            ),
           content: <p>{item.content}</p>,
           datetime: <span>{item.created_at}</span>,
         };
@@ -201,32 +202,24 @@ const ShowFood = (props) => {
       });
   };
 
+  const carouselList = gallery
+    ? gallery.map((item) => {
+        return (
+          <div>
+            <h3 style={contentStyle}>
+              <img src={item.encoded} width="100%" height="100%" />
+            </h3>
+          </div>
+        );
+      })
+    : "";
   return (
     <Fragment>
       <div className="container mt-5">
         <div className="row">
           <div className="col-md-8" style={{ height: "80vh" }}>
             <Carousel autoplay>
-              <div>
-                <h3 style={contentStyle}>
-                  <img src={image} width="100%" height="100%" />
-                </h3>
-              </div>
-              <div>
-                <h3 style={contentStyle}>
-                  <img src={image} width="100%" height="100%" />
-                </h3>
-              </div>
-              <div>
-                <h3 style={contentStyle}>
-                  <img src={image} width="100%" height="100%" />
-                </h3>
-              </div>
-              <div>
-                <h3 style={contentStyle}>
-                  <img src={image} width="100%" height="100%" />
-                </h3>
-              </div>
+              {carouselList}
             </Carousel>
           </div>
           <div className="col-md-4 p-md-5">
@@ -267,7 +260,7 @@ const ShowFood = (props) => {
                 />
                 <Comment
                   avatar={
-                    (localStorage.isAdmin || sessionStorage.isAdmin) ? (
+                    localStorage.isAdmin || sessionStorage.isAdmin ? (
                       <Avatar icon={<UserOutlined />} />
                     ) : (
                       <Avatar src={<Image src={getImage()} />} />

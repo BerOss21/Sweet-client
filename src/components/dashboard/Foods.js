@@ -33,6 +33,7 @@ const Foods = (props) => {
   const [categories, setCategories] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const [galleryUrl, setGalleryUrl] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fresh, setFresh] = useState(false);
   const [itemToEdit,setItemToEdit]=useState("");
@@ -160,11 +161,13 @@ const Foods = (props) => {
   const handleOk = () => {
     form.current.resetFields();
     setIsModalVisible(false)
+    setGalleryUrl([]);
   };
 
   const handleCancel = () => {
     form.current.resetFields();
     setIsModalVisible(false);
+    setGalleryUrl([]);
   };
 
   /* end of modal*/
@@ -208,6 +211,7 @@ const Foods = (props) => {
         category: values.category,
         price: values.price,
         image: imageUrl,
+        gallery:galleryUrl
       },{ headers: { "Authorization": `Bearer ${token}` } })
       .then((res) => {
         setIsModalVisible(false);
@@ -249,6 +253,18 @@ const Foods = (props) => {
     return isJpgOrPng && isLt2M;
   };
 
+  const beforeUpload2 = (file) => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 10;
+    if (!isLt2M) {
+      message.error("Image must smaller than 10 MB!");
+    }
+    return isJpgOrPng && isLt2M;
+  };
+
   const handleChange = (info) => {
     if (info.file.status === "uploading") {
       setLoading(true);
@@ -264,6 +280,25 @@ const Foods = (props) => {
     }
   };
 
+  const handleChange2 = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      setGalleryUrl([]);
+      getBase64(info.file.originFileObj, (image) => {
+        let gallery=galleryUrl;
+        gallery.push(image);
+        console.log("list",galleryUrl.length)
+        setGalleryUrl(gallery);
+        setLoading(false);
+      });
+    }
+  };
+
+
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -271,7 +306,10 @@ const Foods = (props) => {
     </div>
   );
   //end upload image
+ //
+    
 
+ //
   //Select
   const selectList = categories ? (
     categories.map((item) => {
@@ -284,6 +322,8 @@ const Foods = (props) => {
   ) : (
     <Select.Option value="0">No category</Select.Option>
   );
+
+
   return (
     <Fragment>
       <div className="col-md-9 px-0">
@@ -380,6 +420,30 @@ const Foods = (props) => {
                         alt="image"
                         style={{ width: "100%" }}
                       />
+                    ) : (
+                      uploadButton
+                    )}
+                  </Upload>
+                </Form.Item>
+                <Form.Item
+                  label="Gallery"
+                  name="galley"
+                  rules={[
+                    { required:itemToEdit.length?false:true, message: "Please download image!" },
+                  ]}
+                >
+                  <Upload
+                    name="gallery"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={true}
+                    multiple={true}
+                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    beforeUpload={beforeUpload2}
+                    onChange={handleChange2}
+                  >
+                    {galleryUrl? (
+                          "image"
                     ) : (
                       uploadButton
                     )}
