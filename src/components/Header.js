@@ -8,6 +8,7 @@ const Header = (props) => {
     props.location.pathname == "/dashboard/foods" ||
     props.location.pathname == "/dashboard/categories" ||
     props.location.pathname == "/dashboard/orders" ||
+    props.location.pathname == "/dashboard/customers" ||
     props.location.pathname == "/dashboard/staff"? (
     ""
   ) : (

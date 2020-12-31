@@ -47,7 +47,7 @@ const ShowFood = (props) => {
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
-  const [comments, setComments] = useState("");
+  const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -99,6 +99,7 @@ const ShowFood = (props) => {
       .get(`/api/comments/${id}`)
       .then((res) => {
         setComments(res.data.comments);
+        console.log("comments",res.data.comments)
       })
       .catch((err) => {
         console.log("err", err);
@@ -143,7 +144,7 @@ const ShowFood = (props) => {
         console.log("error", err);
       });
   };
-  const data = comments
+  const data = comments.length
     ? comments.map((item) => {
         return {
           actions:
@@ -161,10 +162,10 @@ const ShowFood = (props) => {
                 ]
               : [],
           author: item.customer.name,
-          avatar: item.image ? (
-            <Avatar src={<Image src={item.image} />} />
-          ) : (
+          avatar: item.customer_id==0? (
             <Avatar icon={<UserOutlined />} />
+          ) : (
+            <Avatar src={<Image src={item.customer.image.encoded} />} />
           ),
           content: <p>{item.content}</p>,
           datetime: <span>{item.created_at}</span>,
@@ -266,7 +267,7 @@ const ShowFood = (props) => {
                 />
                 <Comment
                   avatar={
-                    getImage() == "not available" ? (
+                    (localStorage.isAdmin || sessionStorage.isAdmin) ? (
                       <Avatar icon={<UserOutlined />} />
                     ) : (
                       <Avatar src={<Image src={getImage()} />} />

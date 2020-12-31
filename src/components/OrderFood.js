@@ -115,7 +115,7 @@ const OrderFood = (props) => {
             style={{textAlign:"center",width:"90%"}}
             />
              <Alert 
-            message={`${props.location.total} DHS`}
+            message={`${sessionStorage.total} DHS`}
             type="success" 
             style={{textAlign:"center",width:"90%",marginTop:"5px"}}
             />

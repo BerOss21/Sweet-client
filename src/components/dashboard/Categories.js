@@ -354,7 +354,7 @@ const Categories = (props) => {
               onChange={onChange}
               bordered
               pagination={{ pageSize: 5 }}
-              scroll={{ x: 1300, y: 300 }}
+              scroll={{ x: 1000, y: 300 }}
             />
           </div>
         </div>

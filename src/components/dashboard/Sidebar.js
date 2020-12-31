@@ -42,6 +42,12 @@ const Sidebar = (props) => {
         >
           Staff
         </NavLink>
+        <NavLink
+          to="/dashboard/customers"
+          className="list-group-item list-group-item-action border-none"
+        >
+          Customers
+        </NavLink>
       </div>
     </Fragment>
   );

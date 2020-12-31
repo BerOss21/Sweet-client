@@ -204,7 +204,8 @@ const Cart = (props) => {
 
   const handleCheckout=()=>{
       if(region){
-        props.history.push({pathname:`/order`,cartContent,total})
+        sessionStorage.setItem("total",total)
+        props.history.push({pathname:`/order`})
       }
       else{
           message.error("You should choise a region")
