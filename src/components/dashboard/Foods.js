@@ -37,7 +37,7 @@ const Foods = (props) => {
   const [loading, setLoading] = useState(false);
   const [fresh, setFresh] = useState(false);
   const [itemToEdit,setItemToEdit]=useState("");
-  const [isEditForm,setIsEditForm]=useState(false);
+  const [fileList,setFileList]=useState([]);
   const form = useRef();
   const isInitialMount = useRef(true);
 
@@ -153,6 +153,14 @@ const Foods = (props) => {
       if(food){
         setItemToEdit(food);
         setImageUrl(food[0].image.encoded)
+        let gallery=[];
+        let fileList=[];
+        food[0].gallery.forEach((item,key)=>{
+            gallery.push(item.encoded)
+            fileList.push({uid:key,url:item.encoded})
+        });
+        setFileList(fileList);
+        setGalleryUrl(gallery);
         setIsModalVisible(true);
       }
     }
@@ -182,6 +190,7 @@ const Foods = (props) => {
           category: values.category,
           price: values.price,
           image: imageUrl?imageUrl:"",
+          gallery:galleryUrl?galleryUrl:"",
           img:itemToEdit[0].image.basename
         },{ headers: { "Authorization": `Bearer ${token}` } })
         .then((res) => {
@@ -280,6 +289,7 @@ const Foods = (props) => {
     }
   };
 
+  
   const handleChange2 = (info) => {
     if (info.file.status === "uploading") {
       setLoading(true);
@@ -287,14 +297,19 @@ const Foods = (props) => {
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
-      setGalleryUrl([]);
       getBase64(info.file.originFileObj, (image) => {
         let gallery=galleryUrl;
         gallery.push(image);
-        console.log("list",galleryUrl.length)
         setGalleryUrl(gallery);
         setLoading(false);
       });
+    }
+    else{
+      let gallery=[];
+      info.fileList.forEach(item=>{
+        gallery.push(item.url);
+      })
+      setGalleryUrl(gallery);
     }
   };
 
@@ -438,15 +453,12 @@ const Foods = (props) => {
                     className="avatar-uploader"
                     showUploadList={true}
                     multiple={true}
+                    defaultFileList={fileList}
                     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                     beforeUpload={beforeUpload2}
                     onChange={handleChange2}
                   >
-                    {galleryUrl? (
-                          "image"
-                    ) : (
-                      uploadButton
-                    )}
+                    {fileList.length >= 8 ? null : uploadButton}
                   </Upload>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 6 }}>
