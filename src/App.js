@@ -15,11 +15,16 @@ import OrderFood from "./components/OrderFood";
 import MyOrders from "./components/MyOrders";
 import Cart from "./components/Cart";
 import Thanks from "./components/Thanks";
+import LoginCustomer from "./components/LoginCustomer";
+import RegisterCustomer from "./components/RegisterCutomer";
+import ForgotPass from './components/reset_password/ForgotPass';
+import ResetPass from './components/reset_password/ResetPass';
+import ForgotPassCustomer from './components/reset_password/ForgotPassCustomer';
+import ResetPassCustomer from './components/reset_password/ResetPassCustomer';
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
-import LoginCustomer from "./components/LoginCustomer";
-import RegisterCustomer from "./components/RegisterCutomer";
+
 
 function App() {
   return (
@@ -39,6 +44,10 @@ function App() {
           <RouteWithoutToken path="/login" component={LoginCustomer} />
           <RouteWithoutToken path="/register" component={RegisterCustomer} />
           <RouteWithoutToken path="/admin" component={Login} />
+          <RouteWithoutToken path="/password" component={ForgotPass}/>
+          <RouteWithoutToken path="/resetpass/:token" component={ResetPass}/>
+          <RouteWithoutToken path="/customer/password" component={ForgotPassCustomer}/>
+          <RouteWithoutToken path="/resetpass_customer/:token" component={ResetPassCustomer}/>
         </Switch>
       </BrowserRouter>
     </Fragment>

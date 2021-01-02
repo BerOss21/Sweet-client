@@ -1,7 +1,8 @@
 import React, { Fragment } from "react";
 import Footer from "./Footer";
 import { Form, Input, Button, Checkbox, message } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { LockOutlined } from "@ant-design/icons";
+import { Link} from "react-router-dom";
 import axios from "axios";
 
 const LoginCustomer = (props) => {
@@ -89,9 +90,9 @@ const LoginCustomer = (props) => {
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
-            <a className="login-form-forgot" href="">
+            <Link to="/customer/password">
               Forgot password
-            </a>
+            </Link>
           </Form.Item>
 
           <Form.Item>
@@ -102,7 +103,9 @@ const LoginCustomer = (props) => {
             >
               Log in
             </Button>
-            Or <a href="">register now!</a>
+            Or <Link to="/register">
+             Register now
+            </Link>
           </Form.Item>
         </Form>
       </div>

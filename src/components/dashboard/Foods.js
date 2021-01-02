@@ -255,9 +255,9 @@ const Foods = (props) => {
     if (!isJpgOrPng) {
       message.error("You can only upload JPG/PNG file!");
     }
-    const isLt2M = file.size / 1024 / 1024 < 10;
+    const isLt2M = file.size / 1024 / 1024 < 40;
     if (!isLt2M) {
-      message.error("Image must smaller than 10 MB!");
+      message.error("Image must smaller than 4 MB!");
     }
     return isJpgOrPng && isLt2M;
   };
@@ -304,13 +304,15 @@ const Foods = (props) => {
         setLoading(false);
       });
     }
-    else{
+    else if(info.file.status!="error"){
       let gallery=[];
       info.fileList.forEach(item=>{
-        gallery.push(item.url);
+        gallery.push(item.url || item.thumbUrl);
       })
       setGalleryUrl(gallery);
     }
+    console.log("galley",galleryUrl);
+    console.log("file list",info.fileList)
   };
 
 

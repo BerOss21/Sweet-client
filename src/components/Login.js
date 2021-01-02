@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import Footer from "./Footer";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import {Link} from "react-router-dom";
 import axios from "axios";
 
 const Login = (props) => {
@@ -88,9 +89,9 @@ const Login = (props) => {
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
-            <a className="login-form-forgot" href="">
+            <Link to="/password">
               Forgot password
-            </a>
+            </Link>
           </Form.Item>
 
           <Form.Item>
