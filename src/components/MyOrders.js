@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
+import "./main.css";
 import {
   Table,
   Select,
@@ -235,19 +236,22 @@ const MyOrders = (props) => {
       <header className="row tm-welcome-section mx-auto">
         <h2 className="col-12 text-center tm-section-title">My Account</h2>
         <p className="col-12 text-center">
-          Total 3 HTML pages are included in this template. Header image has a
-          parallax effect. You can feel free to download, edit and use this
-          TemplateMo layout for your commercial or non-commercial websites.
+          Donec sed orci fermentum, convallis lacus id, tempus elit. Sed eu
+          neque accumsan, porttitor arcu a, interdum est. Donec in risus eu
+          ante. Donec sed orci fermentum, convallis lacus id, tempus elit. Sed
+          eu neque accumsan, porttitor arcu a, interdum est. Donec in risus eu
+          ante.
         </p>
       </header>
-      <div className="container mt-5">
+      <div className="container mt-5" style={{backgroundColor:"transparent"}}>
         <div className="mx-auto mb-5">
           <Card
             title="Detail"
-            headStyle={{ backgroundColor: "rgb(250,250,250)" }}
+            headStyle={{ backgroundColor: "transparent" }}
+            style={{backgroundColor:"transparent"}}
             extra={
               <a
-                className="btn btn-primary btn-sm"
+                className="btn btn-light btn-sm"
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
@@ -378,7 +382,12 @@ const MyOrders = (props) => {
         >
           {optionListForFilter}
         </Select>
-        <Table columns={columns} dataSource={data} bordered />
+        <Table 
+          columns={columns} 
+          dataSource={data} 
+          bordered 
+          rowClassName="bg-row"
+        />
       </div>
       <Footer />
     </Fragment>

@@ -4,7 +4,7 @@ Simple House
 
 https://templatemo.com/tm-539-simple-house
 
-parallax-window-2
+parallax-window-2  tm-history-img
 title
 */
 
@@ -19,7 +19,7 @@ a, button { transition: all 0.3s ease; }
 
 html {
   box-sizing: border-box;
-  -ms-overflow-style: scrollbar;
+  -ms-overflow-style: "scrollbar";
 }
 
 *,
@@ -112,8 +112,8 @@ html {
 }
 
 /*
-  primary: #2D99CC
-  success: #319966
+  primary:rgb(103,82,50)
+  success: rgb(103,82,50)
   danger: #993332
 */
 
@@ -128,35 +128,35 @@ html {
 }
 
 .tm-btn-default {
-  border: 1px solid #ccc;
-  background-color: transparent;
-  color: #626364;
+  border: 1px solid rgb(103,82,50);
+  background-color: rgb(103,82,50);
+  color: #e8d6b8;
 }
 
 .tm-btn-default:hover,
 .tm-btn-default:focus {
   color: white;
-  background-color: #98999A;
+  background-color: rgb(184, 166, 140);
 }
 
 .tm-btn-primary {
-  background-color: #2D99CC;
+  background-color:rgb(103,82,50);
   color: white;
 }
 
 .tm-btn-primary:hover,
 .tm-btn-primary:focus {
-  background-color: #1b6f96;
+  background-color: rgb(184, 166, 140);
 }
 
 .tm-btn-success {
-  background-color: #319966;
+  background-color: rgb(103,82,50);
   color: white;
 }
 
 .tm-btn-success:hover,
 .tm-btn-success:focus {
-  background-color: #1d6e46;
+  background-color: rgb(184, 166, 140);
 }
 
 .tm-btn-danger {
@@ -178,7 +178,7 @@ html {
 }
 
 .tm-text-success {
-  color: #319966;
+  color: rgb(103,82,50);
 }
 
 .text-center {
@@ -197,7 +197,11 @@ html {
 body {
   font-family: 'Open Sans', Arial, sans-serif;
   font-size: 17px;
-  background-color: #ccc;
+  /*background: #FFEFBA;  /* fallback for old browsers */
+  /*background: -webkit-linear-gradient(to left, #FFFFFF, rgb(222,141,47));  /* Chrome 10-25, Safari 5.1-6 */
+  /*background: linear-gradient(to center, #FFFFFF, rgb(212, 159, 99)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: rgb(227,185,113);
+background: linear-gradient(90deg, rgba(227,185,113,1) 0%, rgba(232,214,184,1) 47%, rgba(227,185,113,1) 100%, rgba(0,99,233,0.9948354341736695) 100%);
   overflow-x: hidden;
 }
 
@@ -206,7 +210,7 @@ body {
 }
 
 p, address {
-  color: #626364;
+  color: rgb(103,82,50);
   line-height: 1.8;
 }
 
@@ -214,7 +218,7 @@ p, address {
 .placeholder {
   width: 100%;
   min-height: 460px;
-  background-color: #556E5B;
+  background-color: rgb(103,82,50);
 }
 
 .placeholder-2 {
@@ -236,9 +240,20 @@ p, address {
  
    /* Create the parallax scrolling effect */
    background-attachment: fixed;
-   background-position: center;
+   background-position: center bottom;
    background-repeat: no-repeat;
    background-size: cover;
+   z-index: 2;
+}
+
+.filter-window{
+  position: absolute;
+  top:0;
+  left:0;
+  background-color: rgba(10, 10, 10, 0.5);
+  height: 100%;
+  width: 100%;
+  z-index: 20;
 }
 
 .parallax-window-2 {
@@ -289,22 +304,28 @@ p, address {
 
 .tm-site-logo {
   display: inline-block;
-  margin-right: 5px;
+  margin-right: 14px;
+  width: 80px;
 }
 
 .tm-site-text-box {
   display: inline-block;
+  vertical-align: bottom;
 }
 
 .tm-site-title {
   font-size: 2rem;
   font-weight: 400;
   margin-bottom: 5px;
+  /*color: rgb(209, 193, 160);*/
+  color: #e8d6b8;
 }
 
 .tm-site-description {
   font-size: 1.1rem;
   font-weight: 400;
+  color: #e8d6b8;
+  
 }
 
 .tm-nav {
@@ -333,7 +354,7 @@ p, address {
 }
 
 .tm-nav-link {
-  color: white;
+  color: #e8d6b8;
   text-decoration:none;
   padding-bottom: 10px;
 }
@@ -341,7 +362,7 @@ p, address {
 .tm-nav-link.active,
 .tm-nav-link:hover {
   text-decoration:none;
-  color: white;
+  color: #e8d6b8;
   border-bottom: 1px solid white;
 }
 
@@ -425,7 +446,7 @@ p, address {
 .tm-gallery-title {
   font-size: 1.3rem;
   font-weight: 400;
-  color: #1A6692;
+  color: rgb(103,82,50);
   margin-bottom: 15px;
 }
 
@@ -435,7 +456,7 @@ p, address {
 
 .tm-gallery-price {
   font-size: 1.25rem;
-  color: #2F956D;
+  color: rgb(103,82,50);
   margin-bottom: 60px;
 }
 
@@ -447,7 +468,7 @@ p, address {
 .tm-paging-item {
   list-style: none;
   display: inline-block;
-  border: 1px solid #2F956D;
+  border: 1px solid rgb(103,82,50);
   margin: 7px;
 }
 
@@ -457,13 +478,13 @@ p, address {
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: #2F956D;
+  color: rgb(103,82,50);
   background-color: transparent;
 }
 
 .tm-paging-link.active,
 .tm-paging-link:hover {
-  background-color: #2F956D;
+  background-color: rgb(103,82,50);
   color: white;
 }
 
@@ -503,12 +524,12 @@ p, address {
 }
 
 .tm-footer a {
-  color: #626364;
+  color: rgb(103,82,50);
   text-decoration: none;
 }
 
 .tm-footer a:hover {
-  color: #1A6692;
+  color: rgb(103,82,50);
 }
 
 /* About */
@@ -538,7 +559,7 @@ p, address {
 .tm-person-name {
   font-size: 1.6rem;
   font-weight: 300;
-  color: #09C;
+  color: rgb(103,82,50);
   margin-bottom: 5px;
   margin-top: 15px;
 }
@@ -550,7 +571,7 @@ p, address {
 }
 
 .tm-person-title {
-  color: #C39;
+  color: rgb(103,82,50);
   margin-bottom: 20px;
 }
 
@@ -559,7 +580,7 @@ p, address {
 }
 
 .tm-social-link {
-  color: #626364;
+  color: rgb(103,82,50);
   display: inline-block;
   border-radius: 1px;
   background-color: transparent;
@@ -573,7 +594,7 @@ p, address {
 
 .tm-social-link:hover {
   color: white;
-  background-color: #626364;
+  background-color: rgb(103,82,50);
 }
 
 .tm-social-icon {
@@ -590,7 +611,7 @@ p, address {
 }
 
 .tm-feature-icon {
-  color: #9f9c9c;
+  color: rgb(195, 173, 140);
   margin-bottom: 65px;
 }
 
@@ -631,7 +652,7 @@ p, address {
 .tm-history-title {
   font-size: 1.6rem;
   font-weight: 300;
-  color: #1A6692;
+  color: rgb(103,82,50);
   margin-bottom: 30px;
 }
 
@@ -682,7 +703,7 @@ p, address {
   font-size: 1.1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #626364;
+  color: rgb(103,82,50);
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
@@ -699,35 +720,35 @@ p, address {
 }
 
 .form-control:focus {
-  color: #495057;
+  color: rgb(103,82,50);
   background-color: #fff;
-  border-color: #80bdff;
+  border-color: rgb(103,82,50);
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .form-control::-webkit-input-placeholder {
-  color: #6c757d;
+  color: rgb(103,82,50);
   opacity: 1;
 }
 
 .form-control::-moz-placeholder {
-  color: #6c757d;
+  color: rgb(103,82,50);
   opacity: 1;
 }
 
 .form-control:-ms-input-placeholder {
-  color: #6c757d;
+  color: rgb(103,82,50);
   opacity: 1;
 }
 
 .form-control::-ms-input-placeholder {
-  color: #6c757d;
+  color: rgb(103,82,50);
   opacity: 1;
 }
 
 .form-control::placeholder {
-  color: #6c757d;
+  color: rgb(103,82,50);
   opacity: 1;
 }
 
@@ -755,12 +776,12 @@ address {
 .tm-contact-icon {
   display: inline-block;
   margin-right: 25px;
-  color: #319966;
+  color: rgb(103,82,50);
 }
 
 .tm-contact-link {
   display: inline-block;
-  color: #626364;
+  color: rgb(103,82,50);
   margin-bottom: 25px;
   text-decoration: none;
 }
@@ -825,7 +846,7 @@ address {
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .accordion.active, .accordion:hover {
-  color: #09C;
+  color: rgb(103,82,50);
 }
 
 @keyframes changeIcon {

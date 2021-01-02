@@ -14,7 +14,7 @@ const About = (props) => {
   console.log("session", sessionStorage.getItem("success"));
   return (
     <Fragment>
-      <main>
+      <main className="cors">
         <Head />
         <Staff />
         <Details />

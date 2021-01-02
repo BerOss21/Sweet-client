@@ -17,7 +17,7 @@ const Home=(props)=>{
     console.log("isadminlocal",localStorage.isAdmin);
     return(
         <Fragment>
-            <main>
+            <main className="cors">
                 <Head getCategory={getCategory}/>
                 <Gallery category={category}/>
                 <About/>

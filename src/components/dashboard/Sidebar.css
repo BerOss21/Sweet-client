@@ -3,7 +3,7 @@
     border-right: 0;
     border-left:0;
     font-size: 30px;
-    color: cornflowerblue;
+    color: tomato;
     text-transform: uppercase;
     text-shadow: bisque;
     font-weight: bolder;
@@ -35,9 +35,13 @@
 }
 .headbar-link:hover{
     text-decoration: none;
-    color: white;
+    color: tomato;
     
 }
 .head-div:hover{
     background-color:lightgray;
+}
+
+.side .active{
+    background-color: tomato !important;
 }

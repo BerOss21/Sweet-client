@@ -32,20 +32,20 @@ const Header_main = (props) => {
   };
   return (
     <Fragment>
-      <div className="placeholder">
-        <div className="parallax-window">
-          <div className="tm-header">
+      <div className="placeholder" style={{position:"relative"}}>
+        <div className="filter-window border border-green">
+        <div className="tm-header">
             <div className="row tm-header-inner">
               <div className="col-md-5 col-12">
                 <img
-                  src="img/simple-house-logo.png"
+                  src="./img/simple-house-logo.png"
                   alt="Logo"
                   className="tm-site-logo"
                 />
                 <div className="tm-site-text-box">
-                  <h1 className="tm-site-title">Simple House</h1>
+                  <h1 className="tm-site-title">Sweets House</h1>
                   <h6 className="tm-site-description">
-                    new restaurant template
+                    Quality,hygiene and services
                   </h6>
                 </div>
               </div>
@@ -147,6 +147,9 @@ const Header_main = (props) => {
               </nav>
             </div>
           </div>
+        </div>
+        <div className="parallax-window">
+          
         </div>
       </div>
       <ScriptTag type="text/javascript" src="js/jquery.min.js" />

@@ -7,6 +7,7 @@ import Categories from "./dashboard/Categories";
 import Staff from "./dashboard/Staff";
 import Customers from "./dashboard/Customers";
 import DashHome from "./dashboard/DashHome";
+import "./main.css";
 
 const Dashboard = (props) => {
   return (

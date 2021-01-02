@@ -24,7 +24,7 @@ const Staff = (props) => {
                             src={item.image.encoded}
                             alt="Image"
                             className="img-fluid tm-person-img"
-                           style={{height:"50vh",width:"50%"}}
+                           style={{height:"40vh",width:"50%"}}
                         />
                         <figcaption className="tm-person-description">
                             <h4 className="tm-person-name">{item.first_name} {item.last_name}</h4>

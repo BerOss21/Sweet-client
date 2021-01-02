@@ -1,0 +1,5 @@
+.bg-row{
+    background: rgb(227,185,113);
+    background: linear-gradient(90deg, rgba(227,185,113,1) 0%, rgba(232,214,184,1) 47%, rgba(227,185,113,1) 100%, rgba(0,99,233,0.9948354341736695) 100%);
+}
+

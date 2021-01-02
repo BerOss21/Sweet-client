@@ -21,7 +21,7 @@ const Details = (props) => {
                   eu neque accumsan, porttitor arcu a, interdum est. Donec in
                   risus eu ante.
                 </p>
-                <a href="index.html" className="tm-btn tm-btn-primary">
+                <a href="index.html" className="tm-btn tm-btn-default">
                   Read More
                 </a>
               </div>
@@ -34,7 +34,7 @@ const Details = (props) => {
                   turpis sit. Nam sed suscipit odio. Morbi in dolor finibus,
                   consequat nisl eget.
                 </p>
-                <a href="index.html" className="tm-btn tm-btn-success">
+                <a href="index.html" className="tm-btn tm-btn-default">
                   Read More
                 </a>
               </div>
@@ -43,29 +43,30 @@ const Details = (props) => {
               <div className="tm-feature">
                 <i className="fas fa-4x fa-cocktail tm-feature-icon" />
                 <p className="tm-feature-description">
-                  Morbi in dolor finibus, consequat nisl eget, pretium nunc.
-                  Maecenas pretium rutrum molestie. Duis dignissim egestas
-                  turpis sit.
+                   Maecenas pretium rutrum molestie. Duis dignissim egestas
+                  turpis sit. Nam sed suscipit odio. Morbi in dolor finibus,
+                  consequat nisl eget.
                 </p>
-                <a href="index.html" className="tm-btn tm-btn-danger">
+                <a href="index.html" className="tm-btn tm-btn-default">
                   Read More
                 </a>
               </div>
             </div>
           </div>
         </div>
-        <div className="tm-container-inner tm-history">
+        <div className="tm-container-inner tm-history mx-auto">
           <div className="row">
             <div className="col-12">
               <div className="tm-history-inner">
                 <img
-                  src="img/about-06.jpg"
+                  src="./../img/about-06.jpg"
                   alt="Image"
-                  className="img-fluid tm-history-img"
+                  className="img-fluid tm-history-img "
+                  width="40%"
                 />
                 <div className="tm-history-text">
                   <h4 className="tm-history-title">
-                    History of our restaurant
+                    Our History
                   </h4>
                   <p className="tm-mb-p">
                     Sed ligula risus, interdum aliquet imperdiet sit amet,
@@ -74,13 +75,14 @@ const Details = (props) => {
                     congue.
                   </p>
                   <p>
-                    Redistributing this template as a downloadable ZIP file on
-                    any template collection site is strictly prohibited. You
-                    will need to{" "}
-                    <a href="https://templatemo.com/contact">
-                      contact TemplateMo
-                    </a>{" "}
-                    for additional permissions about our templates. Thank you.
+                      Maecenas pretium rutrum molestie. Duis dignissim egestas
+                      turpis sit. Nam sed suscipit odio. Morbi in dolor finibus,
+                      consequat nisl eget.
+                  </p>
+                  <p>
+                  Maecenas pretium rutrum molestie. Duis dignissim egestas
+                  turpis sit. Nam sed suscipit odio. Morbi in dolor finibus,
+                  consequat nisl eget.
                   </p>
                 </div>
               </div>
