@@ -1,7 +1,7 @@
 import React,{Component,Fragment} from "react";
 import axios from 'axios';
-import { message } from "antd";
-
+import { message,Spin } from "antd";
+import Footer from "../Footer";
 
 
 class ResetPassCustomer extends Component{
@@ -17,6 +17,7 @@ class ResetPassCustomer extends Component{
             password_c:"",
             error:"",
             errors:"",
+            spinning:false
         }
     };
 
@@ -40,6 +41,7 @@ class ResetPassCustomer extends Component{
     }
     reset(e){
         e.preventDefault();
+        this.setState({spinning:true});
         axios.post("/api/customer/password/reset",{
             email:this.state.email,
             token:this.props.match.params.token,
@@ -80,31 +82,34 @@ class ResetPassCustomer extends Component{
         let errors=this.state.errors;
         return(
             <Fragment>
-                <div style={{width:"40%",margin:"10% auto"}}>
-                    <div className="container">
+               <div style={{width:"30%",margin:"10% auto"}}>
+                    <div className="container bg-transparent">
                         <h2 className="mb-5 text-center">New Password</h2>
                         <form className="form-signin" onSubmit={this.reset}>
                             <div className="form-group">
-                                <input type="email" id="inputEmail" className="form-control" placeholder="Addresse email" name="email" required onChange={this.changeEmail}/>
+                                <input type="email" id="inputEmail" className="form-control" placeholder="Email" name="email" required onChange={this.changeEmail}/>
                                 {
                                     error && <li className="text-danger">{error}</li>
                                 }
                             </div>
                             <div className="form-group">
-                                <input type="password" id="inputPassword" className="form-control" placeholder="Nouveau mot de passe" name="password" required onChange={this.changePass}/>
+                                <input type="password" id="inputPassword" className="form-control" placeholder="New password" name="password" required onChange={this.changePass}/>
                                 {
                                     errors && <li className="text-danger">{errors.password[1]}</li>
                                 }
                             </div>
                             <div className="form-group">
-                                <input type="password" id="inputPassword" className="form-control" placeholder="Confirmez le mot de passe " name="password_c" required onChange={this.changePassC}/>
+                                <input type="password" id="inputPassword" className="form-control" placeholder="Confirm new password " name="password_c" required onChange={this.changePassC}/>
                                 {
                                     errors && <li className="text-danger">{errors.password[0]}</li>
                                 }
                             </div>
-                            <button className="btn btn-lg btn-danger btn-block" type="submit">Valider</button>
+                            <Spin tip="Loading..." spinning={this.state.spinning}>
+                                 <button className="btn btn-lg btn-block text-white" type="submit" style={{backgroundColor:"rgb(103,82,50)"}}>Submit</button>
+                            </Spin>
                         </form>
                     </div>
+                    <Footer/>
                 </div>
         </Fragment>
         )

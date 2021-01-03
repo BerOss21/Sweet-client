@@ -1,6 +1,7 @@
 import React,{Component,Fragment} from "react";
 import axios from 'axios';
-import { message } from "antd";
+import { message,Spin } from "antd";
+import Footer from "../Footer";
 
 
 class ForgotPass extends Component{
@@ -10,8 +11,9 @@ class ForgotPass extends Component{
         this.changeEmail=this.changeEmail.bind(this);
         this.state={
             email:"",
-            error:""
-        }
+            error:"",
+            spinning:false
+        };
     };
     changeEmail(e){
         e.preventDefault();
@@ -21,6 +23,7 @@ class ForgotPass extends Component{
     }
     sendEmail(e){
         e.preventDefault();
+        this.setState({spinning:true});
         axios.post("/api/password/email",{
             email:this.state.email,
         }).then(res=>{
@@ -44,20 +47,23 @@ class ForgotPass extends Component{
         let error=this.state.error;
         return(
             <Fragment>
-                <div style={{width:"40%",margin:"10% auto"}}>
-                    <div className="container">
-                        <h2 className="mb-5 text-center">Mot de passe oublié </h2>
+                <div style={{width:"30%",margin:"10% auto"}}>
+                    <div className="container bg-transparent">
+                        <h2 className="mb-5 text-center">Forgot Password (ADMIN) </h2>
                         <form className="form-signin" onSubmit={this.sendEmail}>
                             <div className="form-group">
-                                <input type="email" id="inputEmail" className="form-control" placeholder="Addresse email " name="email" required onChange={this.changeEmail}/>
+                                <input type="email" id="inputEmail" className="form-control" placeholder="Enter your email " name="email" required onChange={this.changeEmail}/>
                                 {
                                     error && <li className="text-danger">{error}</li>
                                 }
                             </div>
-                            <button className="btn btn-lg btn-danger btn-block" type="submit">Valider</button>
+                            <Spin tip="Loading..." spinning={this.state.spinning}>
+                                <button className="btn btn-lg btn-block text-white" type="submit" style={{backgroundColor:"rgb(103,82,50)"}}>Submit</button>
+                            </Spin>
                         </form>
                     </div>
                 </div>
+                <Footer/>
         </Fragment>
         )
     }

@@ -1,5 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Footer from "./Footer";
+import "./css/all.min.css";
+import "./css/templatemo-style.css";
+import "./ShowFood.css";
 import {
   Collapse,
   Carousel,
@@ -11,10 +14,11 @@ import {
   List,
   Input,
   Image,
+  Spin,
 } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { get } from "jquery";
+import { Link } from "react-router-dom";
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -51,6 +55,7 @@ const ShowFood = (props) => {
   const [content, setContent] = useState("");
   const [gallery, setGallery] = useState("");
   const [fresh, setFresh] = useState(false);
+  const [spinning, setSpinning] = useState(true);
 
   ////////////////////////////// get token and id
 
@@ -77,6 +82,7 @@ const ShowFood = (props) => {
   /////////////////////////////
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios
       .get(`/api/foods/${props.match.params.food}`)
       .then((res) => {
@@ -87,22 +93,12 @@ const ShowFood = (props) => {
         setPrice(res.data.food[0].price);
         setCategory(res.data.food[0].category.name);
         setImage(res.data.food[0].image.encoded);
-        setGallery(res.data.food[0].gallery)
+        setGallery(res.data.food[0].gallery);
+        setComments(res.data.food[0].comments);
+        setSpinning(false);
       })
       .catch((err) => {
         console.log("error", err);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get(`/api/comments/${id}`)
-      .then((res) => {
-        setComments(res.data.comments);
-        console.log("comments", res.data.comments);
-      })
-      .catch((err) => {
-        console.log("err", err);
       });
   }, [fresh]);
 
@@ -215,67 +211,84 @@ const ShowFood = (props) => {
     : "";
   return (
     <Fragment>
-      <div className="container mt-5">
+      <div className="container bg-transparent mt-5">
         <div className="row">
           <div className="col-md-8" style={{ height: "80vh" }}>
-            <Carousel autoplay>
-              {carouselList}
-            </Carousel>
+            <Spin tip="Loading..." spinning={spinning}>
+              <Carousel autoplay>{carouselList}</Carousel>
+            </Spin>
           </div>
           <div className="col-md-4 p-md-5">
-            <div>
-              <h2>{name}</h2>
-              <h5 className="text-danger">{category}</h5>
-              <p>{description}</p>
-              <strong>{price} DHS</strong>
-              <button
-                className="btn btn-success"
-                onClick={() => {
-                  handleAdd(name, price, id, image);
-                }}
-              >
-                Add to cart
-              </button>
-            </div>
+            <Spin tip="Loading..." spinning={spinning}>
+              <div>
+                <h5 className="text-danger">{category}</h5>
+                <h4>{name}</h4>
+                <h1 style={{ fontWeight: "bolder", color: "brown" }}>
+                  {price} DHS
+                </h1>
+                <p>{description}</p>
+                {((sessionStorage.token && !sessionStorage.isAdmin) ||
+                  (localStorage.token && !localStorage.isAdmin)) && (
+                  <button
+                    className="tm-btn tm-btn-default w-100"
+                    onClick={() => {
+                      handleAdd(name, price, id, image);
+                    }}
+                    style={{ fontSize: "20px" }}
+                  >
+                    <ShoppingCartOutlined />{" "}
+                    <span style={{ verticalAlign: "sub" }}>Add to cart</span>
+                  </button>
+                )}
+              </div>
+            </Spin>
           </div>
           <div className="col-md-8">
-            <Collapse defaultActiveKey={["1"]}>
-              <Panel header="Comments" key="1">
-                <List
-                  className="comment-list"
-                  header={`${data.length} comments`}
-                  itemLayout="horizontal"
-                  dataSource={data}
-                  renderItem={(item) => (
-                    <li>
-                      <Comment
-                        actions={item.actions}
-                        author={item.author}
-                        avatar={item.avatar}
-                        content={item.content}
-                        datetime={item.datetime}
-                      />
-                    </li>
-                  )}
-                />
-                <Comment
-                  avatar={
-                    localStorage.isAdmin || sessionStorage.isAdmin ? (
-                      <Avatar icon={<UserOutlined />} />
-                    ) : (
-                      <Avatar src={<Image src={getImage()} />} />
-                    )
-                  }
-                  content={
-                    <Editor
-                      onChange={handleChange}
-                      onSubmit={handleSubmit}
-                      value={content}
+            <Spin tip="Loading..." spinning={spinning}>
+              <Collapse defaultActiveKey={["1"]}>
+                <Panel header="Comments" key="1">
+                  <List
+                    className="comment-list"
+                    header={`${data.length} comments`}
+                    itemLayout="horizontal"
+                    dataSource={data}
+                    renderItem={(item) => (
+                      <li>
+                        <Comment
+                          actions={item.actions}
+                          author={item.author}
+                          avatar={item.avatar}
+                          content={item.content}
+                          datetime={item.datetime}
+                        />
+                      </li>
+                    )}
+                  />
+                  {localStorage.token || sessionStorage.token ? (
+                    <Comment
+                      avatar={
+                        localStorage.isAdmin || sessionStorage.isAdmin ? (
+                          <Avatar icon={<UserOutlined />} />
+                        ) : (
+                          <Avatar src={<Image src={getImage()} />} />
+                        )
+                      }
+                      content={
+                        <Editor
+                          onChange={handleChange}
+                          onSubmit={handleSubmit}
+                          value={content}
+                        />
+                      }
                     />
-                  }
-                />
-              </Panel>
-            </Collapse>
+                  ) : (
+                    <div className="alert alert-warning text-center mx-auto">
+                      You should <Link to="/login"> login </Link> to comment
+                    </div>
+                  )}
+                </Panel>
+              </Collapse>
+            </Spin>
           </div>
         </div>
       </div>

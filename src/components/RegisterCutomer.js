@@ -6,11 +6,11 @@ import axios from "axios";
 const formItemLayout = {
   labelCol: {
     xs: { span: 28 },
-    sm: { span: 12 },
+    sm: { span: 8 },
   },
   wrapperCol: {
     xs: { span: 18},
-    sm: { span: 10},
+    sm: { span: 12},
   },
 };
 const tailFormItemLayout = {
@@ -28,8 +28,9 @@ const tailFormItemLayout = {
 
 const RegisterCustomer = (props) => {
   const [form] = Form.useForm();
-
+  const [loading,setLoading]=useState(false)
   const onFinish = (values) => {
+    setLoading(true);
     axios.post("/api/register/customers",{
       name:values.name,
       email:values.email,
@@ -45,6 +46,7 @@ const RegisterCustomer = (props) => {
       message.success("You are registred now");
     }).catch(err=>{
       if(err.response){
+        setLoading(false);
         console.log("errors",err.response)
       }
     })
@@ -52,8 +54,8 @@ const RegisterCustomer = (props) => {
 
   return (
     <Fragment>
-      <div className="container my-5 col-md-4 border border-secondary p-4 text-center">
-        <h3 className="text-center">Registration form</h3>
+      <div className="container my-5 col-md-4 border border-secondary p-4 text-center bg-transparent">
+        <h3 className="text-center mb-5">Register form</h3>
         <Form
           {...formItemLayout}
           form={form}
@@ -129,7 +131,11 @@ const RegisterCustomer = (props) => {
             <Input.Password />
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button  
+           htmlType="submit"
+           className="text-white"
+           loading={loading}
+           style={{backgroundColor:"rgb(103,82,50)"}}>
           Register
         </Button> 
       </Form.Item>

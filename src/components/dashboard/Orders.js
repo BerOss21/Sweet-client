@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import "antd/dist/antd.css";
 import HeadBar from "./HeadBar";
 import { Link } from "react-router-dom";
-import { Table, Modal, Select, message } from "antd";
+import { Table, Modal, Select, message,Spin} from "antd";
 import axios from "axios";
 
 const { Option } = Select;
@@ -13,6 +13,7 @@ const Orders = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const [spinning, setSpinning] = useState(true);
   const [fresh, setFresh] = useState(false);
   const [itemToEdit, setItemToEdit] = useState("");
   const form = useRef();
@@ -35,6 +36,7 @@ const Orders = (props) => {
       .then((res) => {
         console.log("orders", res.data.orders);
         setOrders(res.data.orders);
+        setSpinning(false);
       })
       .catch((error) => {
         if (error.response) {
@@ -211,11 +213,11 @@ const Orders = (props) => {
         <HeadBar />
         <div className="p-4">
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <Link to="/dashboard">Dashboard</Link>
+            <ol className="breadcrumb" style={{backgroundColor:"rgba(255,99,71,0.6)"}}>
+              <li className="breadcrumb-item">
+                <Link to="/dashboard" className="text-dark">Dashboard</Link>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">
+              <li className="breadcrumb-item text-dark active" aria-current="page">
                 Orders
               </li>
             </ol>
@@ -228,6 +230,7 @@ const Orders = (props) => {
               onOk={handleOk}
               onCancel={handleCancel}
               destroyOnClose={true}
+              okButtonProps={{className:"d-none"}}
             >
               <Table
                 columns={columnsList}
@@ -245,6 +248,7 @@ const Orders = (props) => {
             >
               {optionListForFilter}
             </Select>
+            <Spin tip="Loading..." spinning={spinning}> 
             <Table
               columns={columns}
               dataSource={data}
@@ -253,6 +257,7 @@ const Orders = (props) => {
               pagination={{ pageSize: 5 }}
               scroll={{ x: 1300, y: 300 }}
             />
+            </Spin>
           </div>
         </div>
       </div>

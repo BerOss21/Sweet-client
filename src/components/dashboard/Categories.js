@@ -11,7 +11,7 @@ import {
   InputNumber,
   Upload,
   message,
-  Select,
+  Spin,
 } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -38,6 +38,8 @@ const Categories = (props) => {
   const [isEditForm,setIsEditForm]=useState(false);
   const form = useRef();
   const isInitialMount = useRef(true);
+  const [spinning, setSpinning] = useState(true);
+  
 
   ////////////////////////////// get token
 
@@ -53,6 +55,7 @@ const Categories = (props) => {
       .then((res) => {
         console.log("categories", res.data);
         setCategories(res.data.categories);
+        setSpinning(false);
       })
       .catch((error) => {
         if (error.response) {
@@ -257,11 +260,11 @@ const Categories = (props) => {
         <HeadBar />
         <div className="p-4">
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <Link to="/dashboard">Dashboard</Link>
+            <ol className="breadcrumb" style={{backgroundColor:"rgba(255,99,71,0.6)"}}>
+              <li className="breadcrumb-item">
+                <Link to="/dashboard" className="text-dark">Dashboard</Link>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">
+              <li className="breadcrumb-item text-dark active" aria-current="page">
                 Categories
               </li>
             </ol>
@@ -277,6 +280,7 @@ const Categories = (props) => {
               onOk={handleOk}
               onCancel={handleCancel}
               destroyOnClose={true}
+              okButtonProps={{className:"d-none"}}
             >
               <Form
                 {...layout}
@@ -326,7 +330,7 @@ const Categories = (props) => {
                     listType="picture-card"
                     className="avatar-uploader"
                     showUploadList={false}
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    action="/api/images"
                     beforeUpload={beforeUpload}
                     onChange={handleChange}
                   >
@@ -348,6 +352,7 @@ const Categories = (props) => {
                 </Form.Item>
               </Form>
             </Modal>
+            <Spin tip="Loading..." spinning={spinning}> 
             <Table
               columns={columns}
               dataSource={data}
@@ -356,6 +361,7 @@ const Categories = (props) => {
               pagination={{ pageSize: 5 }}
               scroll={{ x: 1000, y: 300 }}
             />
+            </Spin>
           </div>
         </div>
       </div>

@@ -53,7 +53,7 @@ const Register = (props) => {
   return (
     <Fragment>
       <div className="container my-5 col-md-4 border border-secondary p-4 text-center">
-        <h3 className="text-center">Registration form</h3>
+        <h3 className="text-center">Register form</h3>
         <Form
           {...formItemLayout}
           form={form}

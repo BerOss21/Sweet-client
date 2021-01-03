@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Footer from "./Footer";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { LockOutlined } from "@ant-design/icons";
@@ -6,8 +6,9 @@ import { Link} from "react-router-dom";
 import axios from "axios";
 
 const LoginCustomer = (props) => {
-  
+  const [loading,setLoading]=useState(false);
   const onFinish = (values) => {
+    setLoading(true);
     axios.post("/api/login/customers",{
         email:values.email,
         password:values.password
@@ -30,11 +31,13 @@ const LoginCustomer = (props) => {
             props.history.push("/");
         }
         else if(res.data.error){
+          setLoading(false);
             message.error(res.data.error.map(item=>{return (<li>{item}</li>)}));
         }
         
     }).catch(error=>{
         if(error.response){
+           setLoading(false);
             console.log("error",error.response)
             message.error(Object.values(error.response.data).map(item=>{return (<li>{item}</li>)}));
         }
@@ -43,8 +46,8 @@ const LoginCustomer = (props) => {
 
   return (
     <Fragment>
-      <div className="container my-5 col-md-3 border border-secondary p-4">
-        <h3 className="text-center">Login form</h3>
+      <div className="container my-5 col-md-3 border border-secondary p-4 bg-transparent">
+        <h3 className="text-center mb-5">Login form</h3>
         <Form
           name="normal_login"
           className="login-form"
@@ -97,9 +100,10 @@ const LoginCustomer = (props) => {
 
           <Form.Item>
             <Button
-              type="primary"
               htmlType="submit"
-              className="login-form-button"
+              className="login-form-button text-white"
+              style={{backgroundColor:"rgb(103,82,50)"}}
+              loading={loading}
             >
               Log in
             </Button>

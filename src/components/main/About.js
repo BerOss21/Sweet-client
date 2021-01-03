@@ -14,15 +14,13 @@ const About = (props) => {
             <div className="tm-description-box">
               <h4 className="tm-gallery-title">Maecenas nulla neque</h4>
               <p className="tm-mb-45">
-                Redistributing this template as a downloadable ZIP file on any
-                template collection site is strictly prohibited. You will need
-                to{" "}
-                <a rel="nofollow" href="https://templatemo.com/contact">
-                  talk to us
-                </a>{" "}
-                for additional permissions about our templates. Thank you.
+                Donec sed orci fermentum, convallis lacus id, tempus elit. Sed
+                eu neque accumsan, porttitor arcu a, interdum est. Donec in
+                risus eu ante. Donec sed orci fermentum, convallis lacus id,
+                tempus elit. Sed eu neque accumsan, porttitor arcu a, interdum
+                est. Donec in risus eu ante.
               </p>
-              <a href="about.html" className="tm-btn tm-btn-default tm-right">
+              <a href="" className="tm-btn tm-btn-default tm-right">
                 Read More
               </a>
             </div>

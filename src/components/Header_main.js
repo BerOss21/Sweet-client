@@ -1,12 +1,13 @@
 import React, { Fragment, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { ClearOutlined } from "@ant-design/icons";
+import { NavLink,withRouter} from "react-router-dom";
+import { ClearOutlined,PoweroffOutlined} from "@ant-design/icons";
 import { Tooltip } from "antd";
 import "./css/all.min.css";
 import "./css/templatemo-style.css";
 import "bootstrap/dist/css/bootstrap.css";
 import ScriptTag from "react-script-tag";
 import $ from "jquery";
+
 
 const Header_main = (props) => {
   const [fresh, setFresh] = useState(false);
@@ -28,7 +29,7 @@ const Header_main = (props) => {
     e.preventDefault();
     localStorage.clear();
     sessionStorage.clear();
-    setFresh(!fresh);
+    props.history.push(props.location.pathname)
   };
   return (
     <Fragment>
@@ -38,7 +39,7 @@ const Header_main = (props) => {
             <div className="row tm-header-inner">
               <div className="col-md-5 col-12">
                 <img
-                  src="./img/simple-house-logo.png"
+                  src="img/simple-house-logo.png"
                   alt="Logo"
                   className="tm-site-logo"
                 />
@@ -70,7 +71,7 @@ const Header_main = (props) => {
                     <Fragment>
                       {localStorage.isAdmin || sessionStorage.isAdmin ? (
                         <li className="tm-nav-li">
-                          <NavLink to="/dashboard" className="tm-nav-link">
+                          <NavLink to="/dashboard/foods" className="tm-nav-link">
                             Dashboard
                           </NavLink>
                         </li>
@@ -98,7 +99,7 @@ const Header_main = (props) => {
                           </li>
                           <li className="tm-nav-li">
                             <NavLink to="/myOrders" className="tm-nav-link">
-                               Orders
+                               Account
                             </NavLink>
                           </li>
                         </Fragment>
@@ -117,10 +118,10 @@ const Header_main = (props) => {
                         </li>
                         <a
                           id="logout"
-                          className="invisible text-center mt-2 text-white bg-primary rounded"
+                          className="invisible text-center mt-2 text-white bg-danger rounded"
                           onClick={logout}
                         >
-                          <div>Logout</div>
+                          <div> <PoweroffOutlined/> <span style={{verticalAlign:"sub"}}>Logout</span></div>
                         </a>
                       </div>
                     </Fragment>
@@ -159,4 +160,4 @@ const Header_main = (props) => {
   );
 };
 
-export default Header_main;
+export default withRouter(Header_main);

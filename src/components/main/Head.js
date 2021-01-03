@@ -1,15 +1,18 @@
 import React, { Fragment,useState,useEffect} from "react";
 import {BrowserRouter,Link,Switch,Route} from "react-router-dom";
 import axios from "axios";
+import { Spin } from 'antd';
 import $ from "jquery";
 
 const Head = (props) => {
   const [categories,setCategories]=useState("");
+  const [loding,setLoding]=useState(false);
   useState(()=>{
       axios.get("/api/categories").then(res=>{
           let cat=res.data.categories;
           cat.unshift({id:0,name:"All"});
           setCategories(cat);
+          setLoding(true);
       }).catch(err=>{
           console.log(err)
       });
@@ -45,7 +48,18 @@ const Head = (props) => {
         <div className="tm-paging-links">
           <nav>
             <ul>
-              {categoriesList}
+              {loding?categoriesList:(
+                <div style={{
+                  textAlign: "center",
+                  background: "rgba(103, 82, 50, 0.05)",
+                  borderRadius: "4px",
+                  marginBottom: "20px",
+                  padding: "30px 50px",
+                  margin: "20px 0"
+                }}>
+                <Spin />
+              </div>
+              )}
             </ul>
           </nav>
         </div>

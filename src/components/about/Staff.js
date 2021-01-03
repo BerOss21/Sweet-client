@@ -1,13 +1,16 @@
 import React, { Fragment, useState,useEffect } from "react";
 import axios from "axios";
+import {Spin} from "antd";
 
 const Staff = (props) => {
   const [staffs, setStaffs] = useState("");
+  const [spinning, setSpinning] = useState(true);
   useEffect(() => {
     axios
       .get("/api/staffs/")
       .then(res => {
         setStaffs(res.data.staffs);
+        setSpinning(false);
       })
       .catch((err) => {
         console.log("error", err);
@@ -50,9 +53,11 @@ const Staff = (props) => {
   return (
     <Fragment>
       <div className="tm-container-inner tm-persons">
+      <Spin tip="Loading..." spinning={spinning}> 
         <div className="row">
             {staffsList}
         </div>
+        </Spin>
       </div>
     </Fragment>
   );

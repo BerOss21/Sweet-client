@@ -12,6 +12,7 @@ import {
   Upload,
   message,
   Select,
+  Spin
 } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -35,11 +36,13 @@ const Foods = (props) => {
   const [imageUrl, setImageUrl] = useState("");
   const [galleryUrl, setGalleryUrl] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const [fresh, setFresh] = useState(false);
   const [itemToEdit,setItemToEdit]=useState("");
   const [fileList,setFileList]=useState([]);
   const form = useRef();
   const isInitialMount = useRef(true);
+  const [spinning, setSpinning] = useState(true);
 
   ////////////////////////////// get token
 
@@ -56,10 +59,11 @@ const Foods = (props) => {
         console.log("foods", res.data);
         setFoods(res.data.foods);
         setCategories(res.data.categories);
+        setSpinning(false);
       })
       .catch((error) => {
         if (error.response) {
-          console.log("error s", error.response);
+          console.log("errors", error.response);
         }
       });
   }, [fresh]);
@@ -74,7 +78,7 @@ const Foods = (props) => {
       dataIndex: "image",
     },
     {
-      title: "Desccription",
+      title: "Description",
       dataIndex: "description",
     },
     {
@@ -83,7 +87,11 @@ const Foods = (props) => {
       sorter: (a, b) => a.category.length - b.category.length,
     },
     {
-      title: "Price",
+      title: "Gallery",
+      dataIndex: "gallery",
+    },
+    {
+      title: "Price (DHS)",
       dataIndex: "price",
       sorter: {
         compare: (a, b) => a.price - b.price,
@@ -111,6 +119,11 @@ const Foods = (props) => {
           ),
           description: item.description.slice(0, 30) + "...",
           category: item.category?item.category.name:"undifined",
+          gallery:item.gallery.map(i=>{
+            return(
+              <img src={i.encoded} alt={i.basename} width="50px"/>
+            )
+          }),
           price: item.price,
           action: (
             <div className="d-flex">
@@ -174,8 +187,10 @@ const Foods = (props) => {
 
   const handleCancel = () => {
     form.current.resetFields();
-    setIsModalVisible(false);
     setGalleryUrl([]);
+    setImageUrl("");
+    setIsModalVisible(false);
+    setFileList("");
   };
 
   /* end of modal*/
@@ -195,6 +210,8 @@ const Foods = (props) => {
         },{ headers: { "Authorization": `Bearer ${token}` } })
         .then((res) => {
           setIsModalVisible(false);
+          setGalleryUrl([]);
+          setImageUrl("");
           setFresh(!fresh);
           form.current.resetFields();
           message.success(res.data.msg);
@@ -225,6 +242,8 @@ const Foods = (props) => {
       .then((res) => {
         setIsModalVisible(false);
         setFresh(!fresh);
+        setGalleryUrl([]);
+        setImageUrl("");
         form.current.resetFields();
         message.success("Food added with success");
       })
@@ -292,7 +311,7 @@ const Foods = (props) => {
   
   const handleChange2 = (info) => {
     if (info.file.status === "uploading") {
-      setLoading(true);
+      setLoading2(true);
       return;
     }
     if (info.file.status === "done") {
@@ -301,7 +320,7 @@ const Foods = (props) => {
         let gallery=galleryUrl;
         gallery.push(image);
         setGalleryUrl(gallery);
-        setLoading(false);
+        setLoading2(false);
       });
     }
     else if(info.file.status!="error"){
@@ -310,15 +329,21 @@ const Foods = (props) => {
         gallery.push(item.url || item.thumbUrl);
       })
       setGalleryUrl(gallery);
+      setLoading(false);
     }
-    console.log("galley",galleryUrl);
-    console.log("file list",info.fileList)
   };
 
 
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+
+  const uploadButton2 = (
+    <div>
+      {loading2 ? <LoadingOutlined /> : <PlusOutlined />}
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
@@ -347,11 +372,11 @@ const Foods = (props) => {
         <HeadBar />
         <div className="p-4">
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <Link to="/dashboard">Dashboard</Link>
+            <ol className="breadcrumb" style={{backgroundColor:"rgba(255,99,71,0.6)"}}>
+              <li className="breadcrumb-item">
+                <Link to="/dashboard" className="text-dark">Dashboard</Link>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">
+              <li className="breadcrumb-item text-dark active" aria-current="page">
                 Foods
               </li>
             </ol>
@@ -367,6 +392,7 @@ const Foods = (props) => {
               onOk={handleOk}
               onCancel={handleCancel}
               destroyOnClose={true}
+              okButtonProps={{className:"d-none"}}
             >
               <Form
                 {...layout}
@@ -427,7 +453,7 @@ const Foods = (props) => {
                     listType="picture-card"
                     className="avatar-uploader"
                     showUploadList={false}
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    action="/api/images"
                     beforeUpload={beforeUpload}
                     onChange={handleChange}
                   >
@@ -456,11 +482,11 @@ const Foods = (props) => {
                     showUploadList={true}
                     multiple={true}
                     defaultFileList={fileList}
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    action="/api/images"
                     beforeUpload={beforeUpload2}
                     onChange={handleChange2}
                   >
-                    {fileList.length >= 8 ? null : uploadButton}
+                    {fileList.length >= 8 ? null : uploadButton2}
                   </Upload>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 6 }}>
@@ -470,6 +496,7 @@ const Foods = (props) => {
                 </Form.Item>
               </Form>
             </Modal>
+            <Spin tip="Loading..." spinning={spinning}> 
             <Table
               columns={columns}
               dataSource={data}
@@ -477,7 +504,9 @@ const Foods = (props) => {
               bordered
               pagination={{ pageSize: 5 }}
               scroll={{ x: 1300, y: 300 }}
+              style={{borderRadius:"20px"}}
             />
+            </Spin>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState} from "react";
 import "antd/dist/antd.css";
 import HeadBar from "./HeadBar";
 import { Link } from "react-router-dom";
-import { Table, Modal, message,Popconfirm} from "antd";
+import { Table, Modal, message,Popconfirm,Spin} from "antd";
 import axios from "axios";
 
 const Customers = (props) => {
@@ -10,6 +10,7 @@ const Customers = (props) => {
   const [orders, setOrders] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [fresh, setFresh] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   ////////////////////////////// get token
 
@@ -27,6 +28,7 @@ const Customers = (props) => {
       .then((res) => {
         console.log("customers", res.data);
         setCustomers(res.data.customers);
+        setLoading(false)
       })
       .catch((error) => {
         if (error.response) {
@@ -199,24 +201,25 @@ const Customers = (props) => {
         <HeadBar />
         <div className="p-4">
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <Link to="/dashboard">Dashboard</Link>
+            <ol className="breadcrumb" style={{backgroundColor:"rgba(255,99,71,0.6)"}}>
+              <li className="breadcrumb-item">
+                <Link to="/dashboard" className="text-dark">Dashboard</Link>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">
+              <li className="breadcrumb-item text-dark active" aria-current="page">
                 Customers
               </li>
             </ol>
           </nav>
           <div className="content my-5">
-            <h3 className="mb-4">Customer table</h3>
+            <h3 className="mb-4">Customers table</h3>
             <Modal
               title={"Orders List"}
               visible={isModalVisible}
               onOk={handleOk}
               onCancel={handleCancel}
               destroyOnClose={true}
-            >
+              okButtonProps={{className:"d-none"}}
+            >           
               <Table
                 columns={columnsOrders}
                 dataSource={dataOrders}
@@ -225,7 +228,8 @@ const Customers = (props) => {
                 pagination={{ pageSize: 5 }}
                 scroll={{ x: 800, y: 300 }}
               />
-            </Modal>
+            </Modal>  
+            <Spin tip="Loading..." spinning={loading}>       
             <Table
               columns={columns}
               dataSource={data}
@@ -234,6 +238,7 @@ const Customers = (props) => {
               pagination={{ pageSize: 5 }}
               scroll={{ x: 1000, y: 300 }}
             />
+            </Spin>  
           </div>
         </div>
       </div>

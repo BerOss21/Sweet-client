@@ -386,7 +386,7 @@ const MyOrders = (props) => {
           columns={columns} 
           dataSource={data} 
           bordered 
-          rowClassName="bg-row"
+          
         />
       </div>
       <Footer />

@@ -10,6 +10,7 @@ import {
   Input,
   Upload,
   message,
+  Spin
 } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -31,6 +32,7 @@ const Staff = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const [spinning, setSpinning] = useState(true);
   const [fresh, setFresh] = useState(false);
   const [itemToEdit,setItemToEdit]=useState("");
   const form = useRef();
@@ -50,6 +52,7 @@ const Staff = (props) => {
       .then((res) => {
         console.log("staffs", res.data);
         setStaffs(res.data.staffs);
+        setSpinning(false);
       })
       .catch((error) => {
         if (error.response) {
@@ -282,11 +285,11 @@ const Staff = (props) => {
         <HeadBar />
         <div className="p-4">
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <Link to="/dashboard">Dashboard</Link>
+            <ol className="breadcrumb" style={{backgroundColor:"rgba(255,99,71,0.6)"}}>
+              <li className="breadcrumb-item">
+                <Link to="/dashboard" className="text-dark">Dashboard</Link>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">
+              <li className="breadcrumb-item text-dark active" aria-current="page">
                 staff
               </li>
             </ol>
@@ -302,6 +305,7 @@ const Staff = (props) => {
               onOk={handleOk}
               onCancel={handleCancel}
               destroyOnClose={true}
+              okButtonProps={{className:"d-none"}}
             >
               <Form
                 {...layout}
@@ -383,7 +387,7 @@ const Staff = (props) => {
                     listType="picture-card"
                     className="avatar-uploader"
                     showUploadList={false}
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    action="/api/images"
                     beforeUpload={beforeUpload}
                     onChange={handleChange}
                   >
@@ -405,6 +409,7 @@ const Staff = (props) => {
                 </Form.Item>
               </Form>
             </Modal>
+            <Spin tip="Loading..." spinning={spinning}> 
             <Table
               columns={columns}
               dataSource={data}
@@ -413,6 +418,7 @@ const Staff = (props) => {
               pagination={{ pageSize: 5 }}
               scroll={{ x: 1300, y: 300 }}
             />
+            </Spin>
           </div>
         </div>
       </div>
