@@ -31,7 +31,7 @@ const LoginCustomer = (props) => {
             props.history.push("/");
         }
         else if(res.data.error){
-          setLoading(false);
+            setLoading(false);
             message.error(res.data.error.map(item=>{return (<li>{item}</li>)}));
         }
         

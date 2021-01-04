@@ -6,6 +6,7 @@ import "./css/all.min.css";
 import "./css/templatemo-style.css";
 import "bootstrap/dist/css/bootstrap.css";
 import ScriptTag from "react-script-tag";
+import Logo from "./img/simple-house-logo.png";
 import $ from "jquery";
 
 
@@ -39,7 +40,7 @@ const Header_main = (props) => {
             <div className="row tm-header-inner">
               <div className="col-md-5 col-12">
                 <img
-                  src="img/simple-house-logo.png"
+                  src={Logo}
                   alt="Logo"
                   className="tm-site-logo"
                 />

@@ -6,7 +6,7 @@ const Footer = (props) => {
     <Fragment>
       <footer className="tm-footer text-center">
         <p>
-          Copyright © 2020 Sweets House
+          Copyright © 2021 Sweets House
         </p>
       </footer>
     </Fragment>

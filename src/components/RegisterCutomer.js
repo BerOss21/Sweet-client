@@ -30,6 +30,7 @@ const RegisterCustomer = (props) => {
   const [form] = Form.useForm();
   const [loading,setLoading]=useState(false)
   const onFinish = (values) => {
+    console.log(values);
     setLoading(true);
     axios.post("/api/register/customers",{
       name:values.name,
@@ -37,17 +38,25 @@ const RegisterCustomer = (props) => {
       password:values.password,
       confirm:values.confirm
     }).then(res=>{
-      localStorage.setItem("token",res.data.success.token);
-      localStorage.setItem("name",res.data.success.name);
-      localStorage.setItem("id",res.data.success.id);
-      localStorage.setItem("image",res.data.success.image.encoded);
-      localStorage.setItem("email",res.data.success.email);
-      props.history.push("/");
-      message.success("You are registred now");
+      if(res.data.success){
+        localStorage.setItem("token",res.data.success.token);
+        localStorage.setItem("name",res.data.success.name);
+        localStorage.setItem("id",res.data.success.id);
+        localStorage.setItem("image",res.data.success.image.encoded);
+        localStorage.setItem("email",res.data.success.email);
+        props.history.push("/");
+        message.success("You are registred now");
+      }
+      else if(res.data.error){
+        message.error(res.data.error);
+        setLoading(false)
+      }
+   
     }).catch(err=>{
       if(err.response){
         setLoading(false);
-        console.log("errors",err.response)
+        message.error("Error");
+        console.log("errors",err.response);
       }
     })
   };

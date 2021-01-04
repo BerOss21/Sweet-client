@@ -82,7 +82,6 @@ const ShowFood = (props) => {
   /////////////////////////////
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     axios
       .get(`/api/foods/${props.match.params.food}`)
       .then((res) => {
@@ -101,6 +100,10 @@ const ShowFood = (props) => {
         console.log("error", err);
       });
   }, [fresh]);
+
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+  },[]);
 
   const handleAdd = (name, price, id, image) => {
     if (getToken()) {
@@ -157,7 +160,7 @@ const ShowFood = (props) => {
                   </span>,
                 ]
               : [],
-          author: item.customer.name,
+          author: item.customer?item.customer.name:"",
           avatar:
             item.customer_id == 0 ? (
               <Avatar icon={<UserOutlined />} />

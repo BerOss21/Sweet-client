@@ -32,7 +32,7 @@ const OrderFood = (props) => {
         address:values.address,
         message:values.message,
         customer_id:sessionStorage.id || localStorage.id,
-        total,
+        total:sessionStorage.total,
         detail:JSON.parse(sessionStorage.getItem("order"))     
       },{ headers: { "Authorization": `Bearer ${getToken()}` } }).then(res=>{
         if(res.data.success){

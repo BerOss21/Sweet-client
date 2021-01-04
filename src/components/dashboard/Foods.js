@@ -383,7 +383,7 @@ const Foods = (props) => {
           </nav>
           <div className="content my-5">
             <h3 className="mb-4">Foods table</h3>
-            <Button type="primary float-md-right mb-3" onClick={()=>{showModal(0)}}>
+            <Button type="primary mb-3" onClick={()=>{showModal(0)}}>
               Add new 
             </Button>
             <Modal
@@ -496,7 +496,7 @@ const Foods = (props) => {
                 </Form.Item>
               </Form>
             </Modal>
-            <Spin tip="Loading..." spinning={spinning}> 
+            <Spin tip="Loading..." spinning={spinning} style={{clear:"both"}}> 
             <Table
               columns={columns}
               dataSource={data}

@@ -4,21 +4,24 @@ import axios from "axios";
 import "./css/all.min.css";
 import "./css/templatemo-style.css";
 import ScriptTag from "react-script-tag";
+import {Spin,message} from "antd";
 
 const Contact = (props) => {
 
   const [name,setName]=useState("");
   const [email,setEmail]=useState("");
-  const [message,setMessage]=useState("");
+  const [msg,setMessage]=useState("");
   const [subject,setSubject]=useState("");
   const [success,setSuccess]=useState("");
+  const [spinning,setSpinning]=useState(false);
 
   const handleSubmit=e=>{
+      setSpinning(true)
       e.preventDefault();
       axios.post("/api/send",{
         name,
         email,
-        message,
+        msg,
         subject  
       }).then(res=>{
           console.log("response contact",res);
@@ -27,6 +30,8 @@ const Contact = (props) => {
           setName("");
           setSubject("");
           setEmail("");
+          setSpinning(false);
+          message.success("Message sent")
          
       }).catch(err=>{
           console.log("error",err)
@@ -49,7 +54,7 @@ const Contact = (props) => {
     setSubject(e.target.value);
   }
 
-  const handleMessage=e=>{
+  const handlemsg=e=>{
     e.preventDefault();
     setMessage(e.target.value);
   }
@@ -70,6 +75,7 @@ const Contact = (props) => {
         <div className="tm-container-inner-2 tm-contact-section">
           <div className="row">
             <div className="col-md-6">
+            <Spin tip="Loading..." spinning={spinning}>
               <form action method="post" onSubmit={handleSubmit} className="tm-contact-form">
                 <div className="form-group">
                   <input
@@ -107,15 +113,15 @@ const Contact = (props) => {
                 <div className="form-group">
                   <textarea
                     rows={5}
-                    name="message"
+                    name="msg"
                     className="form-control"
-                    placeholder="Message"
+                    placeholder="message"
                     required
-                    onChange={handleMessage}
-                    value={message}
+                    onChange={handlemsg}
+                    value={msg}
                   />
                 </div>
-                <div className="form-group tm-d-flex">
+                <div className="form-group tm-d-flex">         
                   <button
                     type="submit"
                     className="tm-btn tm-btn-default tm-btn-right"
@@ -124,7 +130,9 @@ const Contact = (props) => {
                   </button>
                 </div>
               </form>
+              </Spin>
             </div>
+            
             <div className="col-md-6">
               <div className="tm-address-box">
                 <h4 className="tm-info-title tm-text-success">Our Address</h4>
