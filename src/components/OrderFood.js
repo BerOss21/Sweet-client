@@ -13,6 +13,7 @@ const tailLayout = {
 
 const OrderFood = (props) => {
   const [total,setTotal]=useState("");
+  const [loading,setLoading]=useState(false);
 
   
   ////////////////////////////// get token
@@ -25,6 +26,7 @@ const OrderFood = (props) => {
   
   const onFinish = (values) => {
     console.log("Success:", values);
+    setLoading(true);
     if(JSON.parse(sessionStorage.getItem("order")).length>0){
       axios.post("/api/orders",{
         name:values.fullname,
@@ -39,9 +41,11 @@ const OrderFood = (props) => {
             sessionStorage.removeItem("order");
             sessionStorage.removeItem("cartContent");
             props.history.push("/thanks");
+            setLoading(false);
         }
       }).catch(err=>{
         console.log("error",err);
+        setLoading(false);
       })
     }
 
@@ -69,7 +73,7 @@ const OrderFood = (props) => {
   ):"";
   return (
     <Fragment>
-      <div className="container mt-5 col-md-6">
+      <div className="container mt-5 col-md-6 p-1">
         <Card title="Checkout">
           <Form
             {...layout}
@@ -119,7 +123,7 @@ const OrderFood = (props) => {
             type="success" 
             style={{textAlign:"center",width:"90%",marginTop:"5px"}}
             />
-              <Button type="primary" htmlType="submit" style={{width:"90%",marginTop:"5px"}}>
+              <Button type="primary" htmlType="submit"  loading={loading} style={{width:"90%",marginTop:"5px"}}>
                 Order
               </Button>
             </Form.Item>    

@@ -79,7 +79,7 @@ const Gallery = (props) => {
             <Card     
               hoverable
               onClick={()=>{handleShow(item.name)}}
-              style={{ width: 240 ,backgroundColor:"transparent"}}
+              style={{backgroundColor:"transparent"}}
               cover={
                 <img
                   alt="example"

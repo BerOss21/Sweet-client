@@ -39,6 +39,7 @@ const Register = (props) => {
       console.log("data of login",res.data)
       localStorage.setItem("token",res.data.success.token);
       localStorage.setItem("name",res.data.success.name);
+      localStorage.setItem("id",res.data.success.id);
       props.history.push("/");
       message.success("You are registred now");
     }).catch(err=>{

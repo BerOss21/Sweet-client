@@ -245,7 +245,7 @@ const Foods = (props) => {
         setGalleryUrl([]);
         setImageUrl("");
         form.current.resetFields();
-        message.success("Food added with success");
+        message.success("Sweet added with success");
       })
       .catch((error) => {
         if (error.response.data.errors) {
@@ -377,17 +377,17 @@ const Foods = (props) => {
                 <Link to="/dashboard" className="text-dark">Dashboard</Link>
               </li>
               <li className="breadcrumb-item text-dark active" aria-current="page">
-                Foods
+                Sweets
               </li>
             </ol>
           </nav>
           <div className="content my-5">
-            <h3 className="mb-4">Foods table</h3>
+            <h3 className="mb-4">Sweets table</h3>
             <Button type="primary mb-3" onClick={()=>{showModal(0)}}>
               Add new 
             </Button>
             <Modal
-              title={itemToEdit.length ? "Edit":"Add new food"}
+              title={itemToEdit.length ? "Edit":"Add new sweet"}
               visible={isModalVisible}
               onOk={handleOk}
               onCancel={handleCancel}

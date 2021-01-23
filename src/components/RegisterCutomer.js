@@ -44,6 +44,7 @@ const RegisterCustomer = (props) => {
         localStorage.setItem("id",res.data.success.id);
         localStorage.setItem("image",res.data.success.image.encoded);
         localStorage.setItem("email",res.data.success.email);
+        localStorage.setItem("id",res.data.success.id);
         props.history.push("/");
         message.success("You are registred now");
       }

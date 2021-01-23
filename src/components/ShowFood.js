@@ -216,12 +216,12 @@ const ShowFood = (props) => {
     <Fragment>
       <div className="container bg-transparent mt-5">
         <div className="row">
-          <div className="col-md-8" style={{ height: "80vh" }}>
+          <div className="col-md-8 mb-3" >
             <Spin tip="Loading..." spinning={spinning}>
-              <Carousel autoplay>{carouselList}</Carousel>
+              <Carousel  autoplay>{carouselList}</Carousel>
             </Spin>
           </div>
-          <div className="col-md-4 p-md-5">
+          <div className="col-md-4 mb-5 p-md-5">
             <Spin tip="Loading..." spinning={spinning}>
               <div>
                 <h5 className="text-danger">{category}</h5>
@@ -246,7 +246,7 @@ const ShowFood = (props) => {
               </div>
             </Spin>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-8 mt-4">
             <Spin tip="Loading..." spinning={spinning}>
               <Collapse defaultActiveKey={["1"]}>
                 <Panel header="Comments" key="1">

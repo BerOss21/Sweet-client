@@ -303,7 +303,7 @@ const MyOrders = (props) => {
               <div className="col-md-4">
                 <Card>
                   <Statistic
-                    title="Count of Order"
+                    title="Number of orders"
                     value={orders.length + " Orders done"}
                     valueStyle={{ color: "green" }}
                     prefix={<CopyOutlined className="ml-2" />}

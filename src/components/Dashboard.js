@@ -18,7 +18,7 @@ const Dashboard = (props) => {
           <Switch>
             <Route exact path="/dashboard" component={DashHome} />
             <Route path="/dashboard/orders" component={Orders} />
-            <Route path="/dashboard/foods" component={Foods} />
+            <Route path="/dashboard/sweets" component={Foods} />
             <Route path="/dashboard/categories" component={Categories} />
             <Route path="/dashboard/customers" component={Customers} />
             <Route path="/dashboard/staff" component={Staff} />

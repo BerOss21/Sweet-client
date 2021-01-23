@@ -194,7 +194,7 @@ html {
   height: auto;
 }
 
-body {
+body,.bg-gradiant {
   font-family: 'Open Sans', Arial, sans-serif;
   font-size: 17px;
   /*background: #FFEFBA;  /* fallback for old browsers */

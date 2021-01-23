@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Contact from "./components/Contact";
@@ -21,12 +21,60 @@ import ForgotPass from './components/reset_password/ForgotPass';
 import ResetPass from './components/reset_password/ResetPass';
 import ForgotPassCustomer from './components/reset_password/ForgotPassCustomer';
 import ResetPassCustomer from './components/reset_password/ResetPassCustomer';
+import {notification } from 'antd';
 
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route} from "react-router-dom";
 import "./App.css";
 
+import Echo from 'laravel-echo';
+import Pusher from "pusher-js";
 
-function App() {
+const token=localStorage.token?localStorage.token:sessionStorage.token;
+const id=localStorage.id?localStorage.id:sessionStorage.id;
+const options = {
+  broadcaster: 'pusher',
+  key: "mindsKey",
+  cluster: "mt1",
+  forceTLS: false,
+  wsHost: window.location.hostname,
+  wsPort: 6001,
+  wssHost: window.location.hostname,
+  wssPort: 6001,
+  disableStats: true,
+  enabledTransports: ['ws', 'wss'],
+  //authEndpoint is your apiUrl + /broadcasting/auth
+  // authEndpoint: config.pusher.authEndpoint, 
+  // As I'm using passport, I need to manually set up the headers.
+  auth: {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+    },
+  },
+};
+
+function App(props) {
+  const echo = new Echo(options);
+
+  const openNotification = (msg) => {
+    notification.open({
+      message: 'Notification',
+      description:msg,
+      placement:"bottomRight",
+      onClick: () => {
+       console.log("clicked")
+      },
+    });
+  };
+
+  useEffect(()=>{
+    echo.private("isAdmin").notification((data) => {
+      if(localStorage.isAdmin || sessionStorage.isAdmin){
+        openNotification(data.message);
+      }  
+    });
+  },[]);
+
   return (
     <Fragment>
       <BrowserRouter>

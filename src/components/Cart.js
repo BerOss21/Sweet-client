@@ -106,13 +106,13 @@ const Cart = (props) => {
       title: "Total",
       dataIndex: "total",
       fixed: "right",
-      width: 150,
+      width: 100,
     },
     {
       title: "",
       dataIndex: "remove",
       fixed: "right",
-      width: 150,
+      width: 100,
     },
   ];
 
@@ -214,20 +214,24 @@ const Cart = (props) => {
   }
   return (
     <Fragment>
-      <div className="container my-5">
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={false}
-          scroll={{ x: 1300, y: 300 }}
-        />
-        <div className="col-md-4 float-md-right mt-3">
+      <div className="container my-5" style={{backgroundColor:"transparent"}}>
+        <div className="row">
+        <div className="col-12">
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={false}
+            scroll={{ x: 1000, y: 300 }}
+          />
+        </div>
+        <div className="col-md-4 ml-auto mt-4">
           <Table
             columns={columnsList}
             dataSource={dataList}
             pagination={false}
           />
           <button className="btn btn-secondary w-100" onClick={handleCheckout}>Checkout</button>
+        </div>
         </div>
       </div>
       <div style={{ clear: "both" }}>

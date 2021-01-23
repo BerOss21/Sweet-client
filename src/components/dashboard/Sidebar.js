@@ -20,11 +20,11 @@ const Sidebar = (props) => {
            <h4>{sessionStorage.name || localStorage.name}</h4>
         </div>
         <NavLink
-          to="/dashboard/foods"
+          to="/dashboard/sweets"
           className="list-group-item list-group-item-action h6 border-none bg-transparent"
           
         >
-          Foods
+          Sweets
         </NavLink>
         <NavLink
           to="/dashboard/categories"
